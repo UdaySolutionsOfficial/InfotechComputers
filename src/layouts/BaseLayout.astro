@@ -1,0 +1,163 @@
+---
+import '../styles/global.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import FloatingWhatsApp from '../components/shared/FloatingWhatsApp.astro';
+import { getSEOMetadata } from '../utils/seo';
+import { getOfficialLogoUrl } from '../utils/assets';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  breadcrumbs?: Array<{ name: string; path: string }>;
+  isHomePage?: boolean;
+  preloadHeroImage?: string;
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  ogImage,
+  ogType,
+  noindex = false,
+  breadcrumbs,
+  isHomePage = false,
+  preloadHeroImage,
+} = Astro.props;
+
+const seo = getSEOMetadata({
+  title,
+  description,
+  canonicalPath: canonicalPath || Astro.url.pathname,
+  ogImage,
+  ogType,
+  noindex,
+  breadcrumbs,
+  isHomePage,
+});
+
+const officialLogoUrl = getOfficialLogoUrl();
+const faviconUrl = officialLogoUrl || '/favicon.svg';
+---
+
+<!doctype html>
+<html lang="en" class="h-full overflow-x-clip max-w-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary SEO Metadata -->
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <meta name="robots" content={seo.robots} />
+    
+    <!-- Canonical URL: Rendered ONLY when a verified production domain is configured -->
+    {seo.canonical && <link rel="canonical" href={seo.canonical} />}
+
+    <!-- Favicon & Touch Icon -->
+    <link rel="icon" href={faviconUrl} />
+    <link rel="apple-touch-icon" href={faviconUrl} />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content={seo.ogType} />
+    <meta property="og:site_name" content={seo.siteName} />
+    <meta property="og:locale" content={seo.locale} />
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    {seo.canonical && <meta property="og:url" content={seo.canonical} />}
+    <meta property="og:image" content={seo.ogImage} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    <meta name="twitter:image" content={seo.ogImage} />
+
+    <!-- Conditional Preload for Critical LCP Hero Image -->
+    {preloadHeroImage && (
+      <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" />
+    )}
+
+    <!-- Structured Data (JSON-LD) -->
+    {seo.jsonLdScripts.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body class="min-h-full flex flex-col bg-white text-[#253449] antialiased overflow-x-clip max-w-full selection:bg-[#EAF3FF] selection:text-[#183B63]">
+    <!-- Accessibility Skip Link -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#183B63] focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none"
+    >
+      Skip to main content
+    </a>
+
+    <!-- Header Navigation -->
+    <Header currentPath={Astro.url.pathname} />
+
+    <!-- Main Page Content -->
+    <main id="main-content" class="flex-1 w-full max-w-full overflow-x-clip">
+      <slot />
+    </main>
+
+    <!-- Global Floating WhatsApp CTA -->
+    <FloatingWhatsApp />
+
+    <!-- Site Footer -->
+    <Footer />
+
+    <!-- Lightweight Scroll-Reveal Controller (transform & opacity only, reduced-motion aware) -->
+    <script>
+      function setupScrollReveal() {
+        const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Auto-discover major interactive cards, grid elements, and section containers
+        const selector = '.reveal-init, .reveal-on-scroll, .card-base, section > div > .grid > div, section h2, section h1';
+        const candidates = document.querySelectorAll(selector);
+
+        if (!candidates.length) return;
+
+        if (isReduced) {
+          candidates.forEach((el) => {
+            el.classList.add('is-revealed');
+          });
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        candidates.forEach((el, index) => {
+          if (!el.classList.contains('reveal-init')) {
+            el.classList.add('reveal-init');
+            // Subtle stagger effect for siblings in grids
+            const stagger = (index % 4) * 75;
+            if (stagger > 0) {
+              (el as HTMLElement).style.transitionDelay = `${stagger}ms`;
+            }
+          }
+          observer.observe(el);
+        });
+      }
+
+      setupScrollReveal();
+      document.addEventListener('astro:page-load', setupScrollReveal);
+    </script>
+  </body>
+</html>

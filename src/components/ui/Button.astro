@@ -1,0 +1,72 @@
+---
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'success';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  target?: string;
+  rel?: string;
+  disabled?: boolean;
+  class?: string;
+  fullWidth?: boolean;
+  [key: string]: any;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  target,
+  rel,
+  disabled = false,
+  class: className = '',
+  fullWidth = false,
+  ...rest
+} = Astro.props;
+
+// Base styles common to all button types
+const baseStyles = 'inline-flex items-center justify-center font-medium font-sans text-center transition-all duration-200 cursor-pointer select-none rounded-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none disabled:cursor-not-allowed btn-shimmer btn-press';
+
+// Size variants
+const sizeStyles = {
+  sm: 'px-3.5 py-1.5 text-xs tracking-wide gap-1.5',
+  md: 'px-5 py-2.5 text-sm tracking-wide gap-2',
+  lg: 'px-7 py-3.5 text-base tracking-wide gap-2.5 font-semibold',
+};
+
+// Color variants adhering to the 75-80% light, 15-20% blue palette
+const variantStyles = {
+  primary: 'bg-[#183B63] text-white hover:bg-[#122d4c] active:bg-[#0c1f35] focus-visible:outline-[#183B63] shadow-xs hover:shadow-sm',
+  secondary: 'bg-[#3478D4] text-white hover:bg-[#2761b0] active:bg-[#1f4e8e] focus-visible:outline-[#3478D4] shadow-xs hover:shadow-sm',
+  outline: 'bg-white text-[#183B63] border border-[#183B63]/25 hover:border-[#183B63] hover:bg-[#EAF3FF]/40 active:bg-[#EAF3FF] focus-visible:outline-[#183B63]',
+  ghost: 'bg-transparent text-[#183B63] hover:bg-[#EAF3FF]/60 active:bg-[#EAF3FF] focus-visible:outline-[#3478D4]',
+  success: 'bg-[#299D72] text-white hover:bg-[#20835e] active:bg-[#196a4b] focus-visible:outline-[#299D72] shadow-xs',
+};
+
+const widthStyle = fullWidth ? 'w-full' : '';
+const combinedClasses = [baseStyles, sizeStyles[size], variantStyles[variant], widthStyle, className].filter(Boolean).join(' ');
+---
+
+{href ? (
+  <a
+    href={disabled ? undefined : href}
+    target={target}
+    rel={target === '_blank' ? (rel || 'noopener noreferrer') : rel}
+    class={combinedClasses}
+    aria-disabled={disabled ? 'true' : undefined}
+    tabindex={disabled ? -1 : undefined}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    type={type}
+    disabled={disabled}
+    class={combinedClasses}
+    {...rest}
+  >
+    <slot />
+  </button>
+)}

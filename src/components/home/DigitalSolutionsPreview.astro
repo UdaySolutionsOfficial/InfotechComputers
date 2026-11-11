@@ -1,0 +1,141 @@
+---
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Button from '../ui/Button.astro';
+import USolveTooltip from '../ui/USolveTooltip.astro';
+import { instituteData } from '../../data/institute';
+import { getUSolveProjectMailto } from '../../utils/whatsapp';
+import { getInfotechMicroLogoUrl, getUSolveMicroLogoUrl } from '../../utils/assets';
+
+const highlightedServices = instituteData.digitalServices.slice(0, 6);
+const projectMailto = getUSolveProjectMailto('Website or Enterprise System Consultation');
+const infotechMicroLogoUrl = getInfotechMicroLogoUrl();
+const usolveMicroLogoUrl = getUSolveMicroLogoUrl();
+---
+
+<section id="services" class="py-16 md:py-24 bg-white border-b border-[#E2EAF3] scroll-mt-20">
+  <Container size="default">
+    
+    <SectionHeading
+      eyebrow="Technical Collaboration"
+      title="Beyond Education. Into Digital Innovation."
+      description="Infotech Computers, in technical collaboration with USolve, also brings modern digital solutions to individuals, startups and businesses. From professional websites to customized software systems, we help transform ideas into practical digital products."
+    />
+
+    <!-- Main Collaboration Showcase Box -->
+    <div class="mt-12 rounded-2xl bg-gradient-to-br from-[#F8FAFC] via-[#F3F7FC] to-white border border-[#E2EAF3] p-6 sm:p-10 lg:p-12 shadow-sm">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        
+        <!-- Left Column: Service Highlights & Narrative -->
+        <div class="lg:col-span-7 flex flex-col items-start">
+          
+          <!-- Distinct Dual-Brand Header Banner with Transparent Micro-Logos & Positive Partnership Icon -->
+          <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-[#E2EAF3] shadow-xs mb-6">
+            <div class="flex items-center gap-1.5">
+              <img
+                src={infotechMicroLogoUrl}
+                alt="Infotech Computers Logo"
+                class="w-4 h-4 object-contain shrink-0"
+                width="16"
+                height="16"
+                loading="lazy"
+              />
+              <span class="text-xs font-bold text-[#183B63]">Infotech Computers</span>
+            </div>
+            
+            <!-- Positive Collaboration Bridge Icon -->
+            <span class="w-4 h-4 rounded-full bg-[#EAF3FF] text-[#3478D4] flex items-center justify-center shrink-0" title="Technical Partnership">
+              <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </span>
+
+            <div class="flex items-center gap-1.5">
+              <img
+                src={usolveMicroLogoUrl}
+                alt="USolve Logo"
+                class="w-4 h-4 object-contain shrink-0"
+                width="16"
+                height="16"
+                loading="lazy"
+              />
+              <USolveTooltip text="USolve" />
+            </div>
+          </div>
+
+          <h3 class="text-2xl sm:text-3xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] tracking-tight leading-snug">
+            Engineered Software &amp; Digital Products
+          </h3>
+
+          <p class="mt-3 text-sm sm:text-base text-[#64748B] leading-relaxed">
+            While Infotech Computers focuses on local computer education, technical software and web development services are engineered in direct collaboration with <USolveTooltip text="USolve" />.
+          </p>
+
+          <!-- 6 Service Category Pills Grid -->
+          <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+            {highlightedServices.map((service, idx) => (
+              <div class="flex items-start gap-2.5 p-3 rounded-lg bg-white border border-[#E2EAF3] text-xs text-[#253449]">
+                <div class="w-5 h-5 rounded-md bg-[#EAF3FF] text-[#3478D4] flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">
+                  0{idx + 1}
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-bold text-[#183B63]">{service.title}</span>
+                  <span class="text-[11px] text-[#64748B]">{service.category}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Official Collaboration Acknowledgment Statement -->
+          <p class="mt-6 text-xs text-[#64748B] italic">
+            Digital Services in technical collaboration with <USolveTooltip text="USolve" />.
+          </p>
+
+          <!-- CTAs -->
+          <div class="mt-8 flex flex-wrap items-center gap-3.5 sm:gap-4">
+            <Button href="/services/" variant="primary" size="md">
+              <span>Explore Digital Services</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </Button>
+
+            <Button href={projectMailto} variant="outline" size="md">
+              <span>Discuss a Project</span>
+            </Button>
+          </div>
+
+        </div>
+
+        <!-- Right Column: 3D Innovation Asset -->
+        <div class="lg:col-span-5">
+          <div class="relative rounded-xl overflow-hidden bg-white p-3 border border-[#E2EAF3] shadow-md hover-elevate">
+            <img
+              src="/images/generated/digital-innovation-3d.jpg"
+              alt="3D Digital Innovation and Software Solutions - USolve Technical Collaboration"
+              width="600"
+              height="450"
+              class="w-full h-auto object-cover rounded-lg"
+              loading="lazy"
+            />
+            <div class="mt-3 px-2 flex items-center justify-between text-xs text-[#64748B]">
+              <span class="font-medium text-[#183B63] flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-[#299D72]"></span>
+                Production Systems
+              </span>
+              <a href={instituteData.collaboration.websiteUrl} target="_blank" rel="noopener noreferrer" class="text-[11px] text-[#3478D4] hover:underline font-mono">
+                visit usolve.in &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </Container>
+</section>

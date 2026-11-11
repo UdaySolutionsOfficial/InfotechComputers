@@ -1,0 +1,118 @@
+---
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { instituteData } from '../../data/institute';
+---
+
+<section class="py-16 md:py-24 bg-white border-b border-[#E2EAF3]">
+  <Container size="default">
+    
+    <SectionHeading
+      eyebrow="Why Infotech Computers"
+      title="Learn with Experience. Grow with Confidence."
+      description="Developing practical technology capabilities through structured curriculum, laboratory practice, and proven institutional standing."
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+      
+      <!-- Feature 1: Established Experience -->
+      <div class="card-base p-6 sm:p-7 flex flex-col justify-between bg-white border border-[#E2EAF3] hover-elevate">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-[#EAF3FF] text-[#183B63] flex items-center justify-center font-bold text-lg mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4]">
+              <circle cx="12" cy="8" r="6"></circle>
+              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+            </svg>
+          </div>
+
+          <h3 class="text-lg font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-2">
+            Established Experience
+          </h3>
+
+          <p class="text-sm text-[#64748B] leading-relaxed">
+            Founded in {instituteData.established}, bringing over {instituteData.experienceYears} of institutional stability and consistent educational service to Nidadavolu.
+          </p>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-[#E2EAF3] text-xs font-mono text-[#3478D4] font-semibold">
+          Since {instituteData.established}
+        </div>
+      </div>
+
+      <!-- Feature 2: Multiple Learning Paths -->
+      <div class="card-base p-6 sm:p-7 flex flex-col justify-between bg-white border border-[#E2EAF3] hover-elevate">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-[#EAF3FF] text-[#183B63] flex items-center justify-center font-bold text-lg mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4]">
+              <line x1="6" y1="3" x2="6" y2="15"></line>
+              <circle cx="18" cy="6" r="3"></circle>
+              <circle cx="6" cy="18" r="3"></circle>
+              <path d="M18 9a9 9 0 0 1-9 9"></path>
+            </svg>
+          </div>
+
+          <h3 class="text-lg font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-2">
+            Multiple Learning Paths
+          </h3>
+
+          <p class="text-sm text-[#64748B] leading-relaxed">
+            Diverse opportunities covering essential office productivity, computerized accounting, graphic design, and software programming.
+          </p>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-[#E2EAF3] text-xs font-mono text-[#3478D4] font-semibold">
+          10 Active Courses + 2 Upcoming
+        </div>
+      </div>
+
+      <!-- Feature 3: Skill-Focused Learning -->
+      <div class="card-base p-6 sm:p-7 flex flex-col justify-between bg-white border border-[#E2EAF3] hover-elevate">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-[#EAF7F2] text-[#299D72] flex items-center justify-center font-bold text-lg mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+
+          <h3 class="text-lg font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-2">
+            Skill-Focused Learning
+          </h3>
+
+          <p class="text-sm text-[#64748B] leading-relaxed">
+            Emphasis on practical computer knowledge, hands-on software exercises, and clear conceptual fundamentals that students can apply directly.
+          </p>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-[#E2EAF3] text-xs font-mono text-[#299D72] font-semibold">
+          Practical Learning Focus
+        </div>
+      </div>
+
+      <!-- Feature 4: Learning for a Changing World -->
+      <div class="card-base p-6 sm:p-7 flex flex-col justify-between bg-white border border-[#E2EAF3] hover-elevate">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-[#EAF3FF] text-[#183B63] flex items-center justify-center font-bold text-lg mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4]">
+              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+            </svg>
+          </div>
+
+          <h3 class="text-lg font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-2">
+            Modern Innovations
+          </h3>
+
+          <p class="text-sm text-[#64748B] leading-relaxed">
+            Introducing upcoming courses in AI Fundamentals and Web Technologies to keep local learners informed of modern digital developments.
+          </p>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-[#E2EAF3] text-xs font-mono text-[#3478D4] font-semibold">
+          AI &amp; Web Horizons
+        </div>
+      </div>
+
+    </div>
+
+  </Container>
+</section>

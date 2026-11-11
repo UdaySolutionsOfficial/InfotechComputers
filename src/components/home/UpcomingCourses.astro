@@ -1,0 +1,120 @@
+---
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Button from '../ui/Button.astro';
+import WhatsAppIcon from '../ui/WhatsAppIcon.astro';
+import { getWhatsAppUrl } from '../../utils/whatsapp';
+
+const aiWhatsapp = getWhatsAppUrl({ type: 'upcoming-course', courseName: 'AI Fundamentals' });
+const webWhatsapp = getWhatsAppUrl({ type: 'upcoming-course', courseName: 'Web Technologies' });
+---
+
+<section class="py-16 md:py-24 bg-[#F3F7FC] border-b border-[#E2EAF3]">
+  <Container size="default">
+    
+    <SectionHeading
+      eyebrow="Emerging Horizons"
+      title="Prepare for Tomorrow's Technology"
+      description="Preview our upcoming courses designed to introduce foundational concepts in artificial intelligence and modern website development."
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+      
+      <!-- Course 1: AI Fundamentals -->
+      <div class="card-base p-6 sm:p-8 flex flex-col justify-between bg-white border border-[#E2EAF3] hover-elevate">
+        <div>
+          <div class="flex items-center justify-between mb-5">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#EAF3FF] text-[#183B63] border border-[#3478D4]/25">
+              <span class="w-2 h-2 rounded-full bg-[#3478D4] animate-pulse"></span>
+              <span>COMING SOON</span>
+            </span>
+            <span class="text-xs font-mono text-[#64748B]">Upcoming Track 01</span>
+          </div>
+
+          <!-- 3D Visual Asset Preview -->
+          <div class="rounded-xl overflow-hidden bg-[#F8FAFC] border border-[#E2EAF3] mb-6 p-2">
+            <img
+              src="/images/generated/ai-fundamentals-3d.jpg"
+              alt="3D Neural Network & AI Fundamentals Illustration"
+              width="600"
+              height="350"
+              class="w-full h-44 sm:h-52 object-cover rounded-lg transform hover:scale-[1.02] transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+
+          <h3 class="text-2xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-3">
+            AI Fundamentals
+          </h3>
+
+          <p class="text-sm text-[#64748B] leading-relaxed mb-6">
+            Discover the fundamentals of Artificial Intelligence, understand everyday AI applications, explore useful AI tools and learn the basics of writing effective prompts.
+          </p>
+
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-xs px-2.5 py-1 rounded bg-[#F3F7FC] text-[#253449] border border-[#E2EAF3] font-medium">Everyday AI Concepts</span>
+            <span class="text-xs px-2.5 py-1 rounded bg-[#F3F7FC] text-[#253449] border border-[#E2EAF3] font-medium">Prompt Foundations</span>
+            <span class="text-xs px-2.5 py-1 rounded bg-[#F3F7FC] text-[#253449] border border-[#E2EAF3] font-medium">Productivity Tools</span>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-[#E2EAF3] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <span class="text-xs text-[#64748B]">Nidadavolu Center &bull; In Planning</span>
+          <Button href={aiWhatsapp} target="_blank" variant="secondary" size="md" class="group">
+            <WhatsAppIcon size={16} class="text-white transition-transform group-hover:scale-110" />
+            <span>Express Your Interest</span>
+          </Button>
+        </div>
+      </div>
+
+      <!-- Course 2: Web Technologies -->
+      <div class="card-base p-6 sm:p-8 flex flex-col justify-between bg-white border border-[#E2EAF3] hover-elevate">
+        <div>
+          <div class="flex items-center justify-between mb-5">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#EAF7F2] text-[#299D72] border border-[#299D72]/25">
+              <span class="w-2 h-2 rounded-full bg-[#299D72] animate-pulse"></span>
+              <span>COMING SOON</span>
+            </span>
+            <span class="text-xs font-mono text-[#64748B]">Upcoming Track 02</span>
+          </div>
+
+          <!-- 3D Visual Asset Preview -->
+          <div class="rounded-xl overflow-hidden bg-[#F8FAFC] border border-[#E2EAF3] mb-6 p-2">
+            <img
+              src="/images/generated/web-technologies-3d.jpg"
+              alt="3D Web Technologies & Frontend Frameworks Illustration"
+              width="600"
+              height="350"
+              class="w-full h-44 sm:h-52 object-cover rounded-lg transform hover:scale-[1.02] transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+
+          <h3 class="text-2xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-3">
+            Web Technologies
+          </h3>
+
+          <p class="text-sm text-[#64748B] leading-relaxed mb-6">
+            Explore the foundations of modern website development and the technologies used to create engaging digital experiences.
+          </p>
+
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-xs px-2.5 py-1 rounded bg-[#F3F7FC] text-[#253449] border border-[#E2EAF3] font-medium">HTML5 &amp; CSS3</span>
+            <span class="text-xs px-2.5 py-1 rounded bg-[#F3F7FC] text-[#253449] border border-[#E2EAF3] font-medium">Responsive Layouts</span>
+            <span class="text-xs px-2.5 py-1 rounded bg-[#F3F7FC] text-[#253449] border border-[#E2EAF3] font-medium">Interactive Web Basics</span>
+          </div>
+        </div>
+
+        <div class="pt-5 border-t border-[#E2EAF3] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <span class="text-xs text-[#64748B]">Nidadavolu Center &bull; In Planning</span>
+          <Button href={webWhatsapp} target="_blank" variant="secondary" size="md" class="group">
+            <WhatsAppIcon size={16} class="text-white transition-transform group-hover:scale-110" />
+            <span>Express Your Interest</span>
+          </Button>
+        </div>
+      </div>
+
+    </div>
+
+  </Container>
+</section>

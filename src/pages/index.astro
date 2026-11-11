@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/home/HeroSection.astro';
+import TrustStrip from '../components/home/TrustStrip.astro';
+import AboutSection from '../components/home/AboutSection.astro';
+import CategoryPreview from '../components/home/CategoryPreview.astro';
+import WhyChooseUs from '../components/home/WhyChooseUs.astro';
+import UpcomingCourses from '../components/home/UpcomingCourses.astro';
+import DigitalSolutionsPreview from '../components/home/DigitalSolutionsPreview.astro';
+import ContactLocationSection from '../components/home/ContactLocationSection.astro';
+---
+
+<BaseLayout
+  title="Infotech Computers Nidadavolu | Computer Courses & Training"
+  description="Discover Infotech Computers, Nidadavolu, established in 2010. Explore computer courses, programming training and upcoming technology programs."
+  canonicalPath="/"
+  isHomePage={true}
+  preloadHeroImage="/images/generated/hero-education-tech-3d.jpg"
+>
+  <!-- Section 1: Hero Section -->
+  <HeroSection />
+
+  <!-- Section 2: Trust and Experience Strip -->
+  <TrustStrip />
+
+  <!-- Section 3: About Infotech Computers -->
+  <AboutSection />
+
+  <!-- Section 4: Course Categories Preview -->
+  <CategoryPreview />
+
+  <!-- Section 5: Why Choose Infotech Computers -->
+  <WhyChooseUs />
+
+  <!-- Section 6: Upcoming Courses (AI & Web) -->
+  <UpcomingCourses />
+
+  <!-- Section 7: Digital Solutions / USolve Collaboration Preview -->
+  <DigitalSolutionsPreview />
+
+  <!-- Section 8: Contact & Location (with Responsive Google Map) -->
+  <ContactLocationSection />
+</BaseLayout>

@@ -1,0 +1,181 @@
+---
+import CourseCard from './CourseCard.astro';
+import Container from '../ui/Container.astro';
+import { instituteData } from '../../data/institute';
+
+const allCourses = instituteData.courses;
+const officeCount = allCourses.filter((c) => c.category === 'office-accounting').length;
+const designCount = allCourses.filter((c) => c.category === 'design-publishing').length;
+const programmingCount = allCourses.filter((c) => c.category === 'programming-db' && c.status === 'active').length;
+const upcomingCount = allCourses.filter((c) => c.status === 'upcoming').length;
+---
+
+<section class="py-12 sm:py-16 md:py-20 bg-white" id="courses-catalogue">
+  <Container size="default">
+    
+    <!-- Filter Bar Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-[#E2EAF3]">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif]">
+          Course Catalogue
+        </h2>
+        <p class="text-sm text-[#64748B] mt-1">
+          Select a category to filter through our computer training and upcoming programs.
+        </p>
+      </div>
+
+      <!-- Accessible Interactive Filter Tabs -->
+      <div
+        role="group"
+        aria-label="Filter courses by category"
+        class="flex flex-wrap items-center gap-2"
+        id="course-filter-group"
+      >
+        <button
+          type="button"
+          data-filter="all"
+          aria-pressed="true"
+          class="course-filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer select-none bg-[#183B63] text-white shadow-xs focus-visible:outline-[#3478D4]"
+        >
+          <span>All Courses</span>
+          <span class="ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono">12</span>
+        </button>
+
+        <button
+          type="button"
+          data-filter="office-accounting"
+          aria-pressed="false"
+          class="course-filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer select-none bg-[#F3F7FC] text-[#253449] hover:bg-[#EAF3FF] hover:text-[#183B63] border border-[#E2EAF3] focus-visible:outline-[#3478D4]"
+        >
+          <span>Office &amp; Business</span>
+          <span class="ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] bg-[#E2EAF3] text-[#183B63] font-mono">{officeCount}</span>
+        </button>
+
+        <button
+          type="button"
+          data-filter="design-publishing"
+          aria-pressed="false"
+          class="course-filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer select-none bg-[#F3F7FC] text-[#253449] hover:bg-[#EAF3FF] hover:text-[#183B63] border border-[#E2EAF3] focus-visible:outline-[#3478D4]"
+        >
+          <span>Design &amp; Publishing</span>
+          <span class="ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] bg-[#E2EAF3] text-[#183B63] font-mono">{designCount}</span>
+        </button>
+
+        <button
+          type="button"
+          data-filter="programming-db"
+          aria-pressed="false"
+          class="course-filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer select-none bg-[#F3F7FC] text-[#253449] hover:bg-[#EAF3FF] hover:text-[#183B63] border border-[#E2EAF3] focus-visible:outline-[#3478D4]"
+        >
+          <span>Programming &amp; DB</span>
+          <span class="ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] bg-[#E2EAF3] text-[#183B63] font-mono">{programmingCount}</span>
+        </button>
+
+        <button
+          type="button"
+          data-filter="upcoming"
+          aria-pressed="false"
+          class="course-filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer select-none bg-[#F3F7FC] text-[#253449] hover:bg-[#EAF3FF] hover:text-[#183B63] border border-[#E2EAF3] focus-visible:outline-[#3478D4]"
+        >
+          <span>Upcoming</span>
+          <span class="ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] bg-[#EAF3FF] text-[#3478D4] font-bold font-mono">{upcomingCount}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Active Filter Status Indicator -->
+    <div class="mt-4 flex items-center justify-between text-xs text-[#64748B]">
+      <span id="active-filter-label" class="font-medium text-[#253449]">
+        Showing 10 active courses and 2 upcoming programs
+      </span>
+      <span>Click any course card to enquire on WhatsApp</span>
+    </div>
+
+    <!-- Grid Container with All 12 Courses -->
+    <div
+      id="courses-cards-container"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 mt-8"
+    >
+      {allCourses.map((c) => (
+        <CourseCard course={c} />
+      ))}
+    </div>
+
+    <!-- Empty State (Fallback) -->
+    <div
+      id="course-empty-state"
+      class="hidden py-16 text-center rounded-xl bg-[#F3F7FC] border border-[#E2EAF3] mt-8"
+    >
+      <p class="text-base font-bold text-[#183B63]">No courses found for this category</p>
+      <p class="text-sm text-[#64748B] mt-1">Please select "All Courses" to view all available offerings.</p>
+    </div>
+
+  </Container>
+</section>
+
+<!-- Accessible Client-Side Instant Filter Controller -->
+<script>
+  function setupCourseFilter() {
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.course-filter-btn');
+    const cards = document.querySelectorAll<HTMLElement>('.course-card');
+    const activeLabel = document.getElementById('active-filter-label');
+    const emptyState = document.getElementById('course-empty-state');
+
+    if (!filterButtons.length || !cards.length) return;
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter') || 'all';
+
+        // Update aria-pressed and styles
+        filterButtons.forEach((b) => {
+          b.setAttribute('aria-pressed', 'false');
+          b.className = 'course-filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer select-none bg-[#F3F7FC] text-[#253449] hover:bg-[#EAF3FF] hover:text-[#183B63] border border-[#E2EAF3] focus-visible:outline-[#3478D4]';
+          const badge = b.querySelector('span:last-child');
+          if (badge) badge.className = 'ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] bg-[#E2EAF3] text-[#183B63] font-mono';
+        });
+
+        btn.setAttribute('aria-pressed', 'true');
+        btn.className = 'course-filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer select-none bg-[#183B63] text-white shadow-xs focus-visible:outline-[#3478D4]';
+        const activeBadge = btn.querySelector('span:last-child');
+        if (activeBadge) activeBadge.className = 'ml-1.5 px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono';
+
+        // Toggle card visibility
+        let visibleCount = 0;
+        cards.forEach((card) => {
+          const cardCategory = card.getAttribute('data-category');
+          if (filter === 'all' || cardCategory === filter) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        // Update status text
+        if (activeLabel) {
+          if (filter === 'all') {
+            activeLabel.textContent = 'Showing 10 active courses and 2 upcoming programs';
+          } else if (filter === 'upcoming') {
+            activeLabel.textContent = 'Showing 2 upcoming programs (Coming Soon)';
+          } else {
+            const categoryName = btn.querySelector('span:first-child')?.textContent || 'selected';
+            activeLabel.textContent = `Showing ${visibleCount} ${visibleCount === 1 ? 'course' : 'courses'} in ${categoryName}`;
+          }
+        }
+
+        // Handle empty state
+        if (emptyState) {
+          if (visibleCount === 0) {
+            emptyState.classList.remove('hidden');
+          } else {
+            emptyState.classList.add('hidden');
+          }
+        }
+      });
+    });
+  }
+
+  setupCourseFilter();
+  document.addEventListener('astro:page-load', setupCourseFilter);
+</script>

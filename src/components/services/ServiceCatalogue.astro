@@ -1,0 +1,92 @@
+---
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Badge from '../ui/Badge.astro';
+import Button from '../ui/Button.astro';
+import { instituteData } from '../../data/institute';
+import { getUSolveProjectMailto } from '../../utils/whatsapp';
+
+const services = instituteData.digitalServices;
+---
+
+<section class="py-16 md:py-24 bg-white border-b border-[#E2EAF3]" id="services-catalogue">
+  <Container size="default">
+    
+    <SectionHeading
+      eyebrow="Capabilities & Solutions"
+      title="Technology That Works for Your Business"
+      description="Every business has different requirements. Through our collaboration with USolve, we offer customized digital solutions designed to improve operations, strengthen online presence and support business growth."
+    />
+
+    <!-- Service Cards Grid — Asymmetric, high-end agency aesthetic -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 mt-12">
+      {services.map((service, idx) => {
+        const isHighlight = service.highlight;
+        const mailtoUrl = getUSolveProjectMailto(service.title);
+
+        return (
+          <div
+            class={`card-base p-7 sm:p-8 flex flex-col justify-between transition-all duration-300 ${
+              isHighlight
+                ? 'bg-gradient-to-b from-[#F3F7FC]/70 via-white to-white border-[#3478D4]/35 shadow-sm hover-elevate'
+                : 'bg-white border-[#E2EAF3] hover-elevate'
+            }`}
+          >
+            <div>
+              <!-- Top Card Header: Index & Category -->
+              <div class="flex items-center justify-between mb-4">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#EAF3FF] text-[#183B63] font-mono text-xs font-bold">
+                  0{idx + 1}
+                </span>
+
+                <Badge variant={isHighlight ? 'blue' : 'neutral'} size="sm">
+                  {service.category}
+                </Badge>
+              </div>
+
+              <!-- Service Title -->
+              <h3 class="text-xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-3 leading-snug">
+                {service.title}
+              </h3>
+
+              <!-- Description -->
+              <p class="text-sm text-[#64748B] leading-relaxed mb-6">
+                {service.description}
+              </p>
+
+              <!-- Inclusions Checklist -->
+              <div class="pt-4 border-t border-[#E2EAF3] mb-6">
+                <span class="text-xs uppercase tracking-wider font-semibold text-[#183B63] block mb-3">
+                  Scope &amp; Deliverables
+                </span>
+                <ul class="flex flex-col gap-2 text-xs text-[#253449]">
+                  {service.inclusions.map((item) => (
+                    <li class="flex items-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-[#299D72] shrink-0">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <!-- Card Bottom Action -->
+            <div class="pt-4 border-t border-[#E2EAF3] flex items-center justify-between gap-3">
+              <span class="text-xs font-mono text-[#64748B]">USolve Partner</span>
+              <Button href={mailtoUrl} variant={isHighlight ? 'secondary' : 'outline'} size="sm">
+                <span>Discuss Solution</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </Button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+  </Container>
+</section>

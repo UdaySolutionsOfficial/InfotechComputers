@@ -1,0 +1,162 @@
+---
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import USolveTooltip from '../ui/USolveTooltip.astro';
+import InstituteVideoCard from './InstituteVideoCard.astro';
+import { instituteData } from '../../data/institute';
+import { getRepresentativePhotoUrl } from '../../utils/assets';
+
+const representativePhotoUrl = getRepresentativePhotoUrl();
+---
+
+<section id="about" class="py-16 md:py-24 bg-white border-b border-[#E2EAF3] relative overflow-hidden scroll-mt-20">
+  <!-- Ambient background glow -->
+  <div class="absolute -top-24 -left-24 w-80 h-80 bg-[#EAF3FF] rounded-full blur-3xl pointer-events-none opacity-50"></div>
+
+  <Container size="default">
+    
+    <SectionHeading
+      eyebrow="About Our Institute"
+      title="Building Computer Skills. Creating Opportunities."
+      description="Established in 2010, Infotech Computers has been providing computer education and training in Nidadavolu. With a focus on building practical computer knowledge and essential technology skills, the institute offers learning opportunities across office applications, accounting, graphic design, programming and emerging technologies."
+    />
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mt-10 sm:mt-12">
+      
+      <!-- Key Pillars & Video (order-2 on mobile, lg:order-1 on desktop) -->
+      <div class="order-2 lg:order-1 lg:col-span-7 flex flex-col gap-5">
+        
+        <!-- Pillar 1 -->
+        <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-[#F3F7FC] border border-[#E2EAF3] hover-elevate group transition-all duration-300 hover:border-[#3478D4]/40">
+          <div class="w-12 h-12 rounded-xl bg-[#EAF3FF] text-[#183B63] flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4]">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+              <path d="M6 6h10"></path>
+              <path d="M6 10h10"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-[#183B63] font-['Manrope_Variable',sans-serif]">
+              Practical Computer Knowledge
+            </h3>
+            <p class="text-sm text-[#64748B] mt-1.5 leading-relaxed">
+              Hands-on lab sessions designed to build concrete computer proficiency for daily office operations, financial accounting with Tally, and creative digital workflows.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-[#F3F7FC] border border-[#E2EAF3] hover-elevate group transition-all duration-300 hover:border-[#299D72]/40">
+          <div class="w-12 h-12 rounded-xl bg-[#EAF7F2] text-[#299D72] flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-[#183B63] font-['Manrope_Variable',sans-serif]">
+              Structured Programming Foundations
+            </h3>
+            <p class="text-sm text-[#64748B] mt-1.5 leading-relaxed">
+              Step-by-step guidance in C, C++, Java, Python, and Oracle database fundamentals to help learners develop logical problem-solving and software development aptitude.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 3 with Interactive USolve Tooltip -->
+        <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-[#F3F7FC] border border-[#E2EAF3] hover-elevate group transition-all duration-300 hover:border-[#3478D4]/40">
+          <div class="w-12 h-12 rounded-xl bg-[#EAF3FF] text-[#183B63] flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4]">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-[#183B63] font-['Manrope_Variable',sans-serif]">
+              Digital Collaboration with <USolveTooltip text="USolve" />
+            </h3>
+            <p class="text-sm text-[#64748B] mt-1.5 leading-relaxed">
+              Connecting local computer training with enterprise software development capabilities to deliver modern websites, business billing software, and custom mobile applications. Hover over <USolveTooltip text="USolve" /> to view partner details.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pillar 4: Institute Video Overview & Update (in collaboration with USolve) -->
+        <InstituteVideoCard />
+
+      </div>
+
+      <!-- Representative Executive Profile Showcase Card (order-1 on mobile, lg:order-2 on desktop) -->
+      <div class="order-1 lg:order-2 lg:col-span-5 lg:-mt-12 xl:-mt-16 mb-2 lg:mb-0">
+        <div class="card-base p-5 sm:p-6 lg:p-7 bg-white border border-[#E2EAF3] shadow-xl rounded-2xl relative overflow-hidden group/card hover:border-[#3478D4]/40 transition-all duration-300">
+          
+          <!-- Top Badge Strip -->
+          <div class="flex items-center justify-between mb-4">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-[#EAF3FF] text-[#183B63] border border-[#3478D4]/20 shadow-xs">
+              <span class="w-2 h-2 rounded-full bg-[#299D72]"></span>
+              Founder &bull; Director
+            </span>
+            <span class="text-xs font-mono text-[#64748B]">Nidadavolu Center</span>
+          </div>
+
+          <!-- Executive Portrait Showcase: Full-height portrait display without cropping -->
+          {representativePhotoUrl ? (
+            <div class="relative w-full aspect-[1792/2368] sm:aspect-[3/4] rounded-xl overflow-hidden shadow-md border border-[#E2EAF3] bg-[#183B63] group/photo">
+              <img
+                src={representativePhotoUrl}
+                alt="N. Srinivas Sir - Founder & Director, Infotech Computers"
+                class="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover/photo:scale-105"
+                width="896"
+                height="1184"
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <div 
+              class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-[#183B63] to-[#3478D4] flex items-center justify-center text-white shrink-0 shadow-md border-2 border-white mb-4"
+              data-representative-photo-slot="true"
+            >
+              <div class="flex flex-col items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/90">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                </svg>
+                <span class="text-[10px] font-bold font-mono tracking-wider uppercase text-white/80 mt-1">Rep</span>
+              </div>
+            </div>
+          )}
+
+          <!-- Executive Identity Plate: Crisp High Contrast & Distinctive Elegance -->
+          <div class="mt-4 pt-1 flex items-start justify-between gap-2">
+            <div>
+              <h4 class="text-xl sm:text-2xl font-extrabold text-[#183B63] font-['Manrope_Variable',sans-serif] tracking-tight">
+                {instituteData.representative.name}
+              </h4>
+              <p class="text-xs sm:text-sm font-semibold text-[#3478D4] mt-0.5 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#299D72]"></span>
+                Founder &amp; Director &bull; Institute Representative
+              </p>
+            </div>
+            <span class="shrink-0 px-2.5 py-1 rounded-full text-xs font-mono font-bold uppercase bg-[#EAF3FF] text-[#183B63] border border-[#3478D4]/20 shadow-xs">
+              Est. 2010
+            </span>
+          </div>
+
+          <!-- Leadership Quote -->
+          <div class="mt-4 p-4 rounded-xl bg-[#F8FAFC] border border-[#E2EAF3] text-xs sm:text-sm text-[#253449] leading-relaxed relative">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="text-[#3478D4]/20 absolute top-3 right-3 pointer-events-none">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+            <p class="italic text-[#64748B] font-medium pr-6">
+              &ldquo;{instituteData.representative.note}&rdquo;
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </Container>
+</section>

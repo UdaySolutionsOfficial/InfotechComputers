@@ -1,0 +1,188 @@
+---
+import { mainNavItems } from '../../data/navigation';
+import { instituteData } from '../../data/institute';
+import { getWhatsAppUrl } from '../../utils/whatsapp';
+import { getOfficialLogoUrl } from '../../utils/assets';
+import Button from '../ui/Button.astro';
+
+export interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+const whatsappUrl = getWhatsAppUrl({ type: 'general' });
+const officialLogoUrl = getOfficialLogoUrl();
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/' || currentPath === '';
+  if (href.startsWith('/#')) return false;
+  return currentPath.startsWith(href);
+}
+
+function getNavTarget(href: string): string {
+  if (href === '/') return 'home';
+  if (href.startsWith('/#')) return href.replace('/#', '');
+  if (href.includes('courses')) return 'courses';
+  if (href.includes('services')) return 'services';
+  return href.replace(/^\/|\/$/g, '');
+}
+---
+
+<!-- Mobile Menu Drawer & Overlay -->
+<div
+  id="mobile-menu-drawer"
+  class="fixed inset-0 z-50 lg:hidden pointer-events-none transition-all duration-300 overflow-hidden"
+  aria-hidden="true"
+>
+  <!-- Backdrop Backdrop Overlay -->
+  <div
+    id="mobile-menu-backdrop"
+    class="absolute inset-0 bg-[#183B63]/40 backdrop-blur-sm opacity-0 transition-opacity duration-300 ease-out"
+  />
+
+  <!-- Sliding Drawer Container -->
+  <div
+    id="mobile-menu-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Mobile Navigation"
+    class="absolute top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl flex flex-col justify-between p-6 transform translate-x-full transition-transform duration-300 ease-out border-l border-[#E2EAF3]"
+  >
+    <!-- Drawer Header -->
+    <div class="flex items-center justify-between pb-4 border-b border-[#E2EAF3]">
+      <div class="flex items-center gap-2.5">
+        {officialLogoUrl ? (
+          <img
+            src={officialLogoUrl}
+            alt="Infotech Computers Logo"
+            class="h-9 w-auto object-contain shrink-0"
+            width="36"
+            height="36"
+          />
+        ) : (
+          <div class="w-8 h-8 rounded-md bg-[#183B63] text-white flex items-center justify-center font-bold text-xs shrink-0">
+            IT
+          </div>
+        )}
+        <div class="flex flex-col">
+          <span class="font-extrabold text-sm text-[#183B63] tracking-tight">INFOTECH</span>
+          <span class="text-[9px] font-semibold text-[#64748B] tracking-wider uppercase">COMPUTERS</span>
+        </div>
+      </div>
+
+      <button
+        id="mobile-menu-close"
+        type="button"
+        class="p-2 rounded-lg text-[#253449] hover:bg-[#F3F7FC] hover:text-[#183B63] focus-visible:outline-[#3478D4]"
+        aria-label="Close navigation menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Nav Links List -->
+    <nav class="flex-1 py-6 overflow-y-auto" aria-label="Mobile Menu Links">
+      <ul class="flex flex-col gap-1.5">
+        {mainNavItems.map((item) => {
+          const active = isActive(item.href);
+          const target = getNavTarget(item.href);
+          return (
+            <li>
+              <a
+                href={item.href}
+                data-nav-target={target}
+                class={`mobile-nav-link flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                  active
+                    ? 'text-[#3478D4] bg-[#EAF3FF] font-semibold'
+                    : 'text-[#253449] hover:bg-[#F3F7FC] hover:text-[#183B63]'
+                }`}
+                aria-current={active ? 'page' : undefined}
+              >
+                <span>{item.label}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#64748B]">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <!-- Drawer Footer Actions -->
+    <div class="pt-4 border-t border-[#E2EAF3] flex flex-col gap-3">
+      <Button href={whatsappUrl} target="_blank" variant="secondary" size="md" fullWidth>
+        <span>Enquire on WhatsApp</span>
+      </Button>
+
+      <div class="p-3 rounded-lg bg-[#F3F7FC] border border-[#E2EAF3] text-xs text-[#64748B] flex flex-col gap-1">
+        <div class="flex items-center gap-1.5 font-medium text-[#253449]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4]"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <span>Call: {instituteData.contact.phoneFormatted}</span>
+        </div>
+        <span>Hours: {instituteData.timings.operatingHours}</span>
+        <span>{instituteData.location.formatted}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupMobileMenu() {
+    const trigger = document.getElementById('mobile-menu-trigger');
+    const drawer = document.getElementById('mobile-menu-drawer');
+    const panel = document.getElementById('mobile-menu-panel');
+    const backdrop = document.getElementById('mobile-menu-backdrop');
+    const closeBtn = document.getElementById('mobile-menu-close');
+    const links = document.querySelectorAll('.mobile-nav-link');
+
+    if (!trigger || !drawer || !panel || !backdrop || !closeBtn) return;
+
+    function openMenu() {
+      drawer?.classList.remove('pointer-events-none');
+      drawer?.setAttribute('aria-hidden', 'false');
+      backdrop?.classList.remove('opacity-0');
+      backdrop?.classList.add('opacity-100');
+      panel?.classList.remove('translate-x-full');
+      panel?.classList.add('translate-x-0');
+      document.body.style.overflow = 'hidden';
+      trigger?.setAttribute('aria-expanded', 'true');
+      closeBtn?.focus();
+    }
+
+    function closeMenu() {
+      panel?.classList.remove('translate-x-0');
+      panel?.classList.add('translate-x-full');
+      backdrop?.classList.remove('opacity-100');
+      backdrop?.classList.add('opacity-0');
+      drawer?.setAttribute('aria-hidden', 'true');
+      trigger?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        drawer?.classList.add('pointer-events-none');
+      }, 300);
+      trigger?.focus();
+    }
+
+    trigger.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+
+    links.forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer?.getAttribute('aria-hidden') === 'false') {
+        closeMenu();
+      }
+    });
+  }
+
+  // Run on first load and view transitions
+  setupMobileMenu();
+  document.addEventListener('astro:page-load', setupMobileMenu);
+</script>

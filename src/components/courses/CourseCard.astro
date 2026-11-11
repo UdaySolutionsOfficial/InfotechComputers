@@ -1,0 +1,76 @@
+---
+import Badge from '../ui/Badge.astro';
+import Button from '../ui/Button.astro';
+import WhatsAppIcon from '../ui/WhatsAppIcon.astro';
+import CourseBrandLogo from '../ui/CourseBrandLogo.astro';
+import type { CourseItem } from '../../data/institute';
+import { getWhatsAppUrl } from '../../utils/whatsapp';
+
+export interface Props {
+  course: CourseItem;
+}
+
+const { course } = Astro.props;
+const isUpcoming = course.status === 'upcoming';
+const whatsappUrl = getWhatsAppUrl({
+  type: isUpcoming ? 'upcoming-course' : 'course',
+  courseName: course.name,
+});
+---
+
+<div
+  class={`course-card card-base p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 ${
+    isUpcoming 
+      ? 'bg-gradient-to-b from-[#F3F7FC] to-white border-[#3478D4]/30 shadow-xs' 
+      : 'bg-white border-[#E2EAF3]'
+  }`}
+  data-category={isUpcoming ? 'upcoming' : course.category}
+>
+  <div>
+    <!-- Card Top Header -->
+    <div class="flex items-center justify-between mb-4">
+      <div class={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 p-2 overflow-hidden transition-colors duration-300 ${
+        isUpcoming ? 'bg-[#EAF3FF] border border-[#3478D4]/20' : 'bg-[#F3F7FC] border border-[#E2EAF3]'
+      }`}>
+        <div class="course-logo-animated w-full h-full flex items-center justify-center">
+          <CourseBrandLogo courseId={course.id} size="100%" />
+        </div>
+      </div>
+
+      <!-- Badge status -->
+      {isUpcoming ? (
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wider uppercase bg-[#EAF3FF] text-[#183B63] border border-[#3478D4]/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#3478D4] animate-pulse"></span>
+          <span>{course.badge || 'COMING SOON'}</span>
+        </span>
+      ) : (
+        <Badge variant="neutral" size="sm">
+          {course.categoryLabel}
+        </Badge>
+      )}
+    </div>
+
+    <!-- Course Title -->
+    <h3 class="text-xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-2 leading-snug">
+      {course.name}
+    </h3>
+
+    <!-- Description -->
+    <p class="text-sm text-[#64748B] leading-relaxed mb-6">
+      {course.shortDescription}
+    </p>
+  </div>
+
+  <!-- Bottom Action Strip -->
+  <div class="pt-4 border-t border-[#E2EAF3] flex items-center justify-between gap-3">
+    <span class="text-xs text-[#64748B] flex items-center gap-1.5">
+      <span class={`w-1.5 h-1.5 rounded-full ${isUpcoming ? 'bg-[#3478D4]' : 'bg-[#299D72]'}`}></span>
+      {isUpcoming ? 'Upcoming Track' : 'Course Offered'}
+    </span>
+
+    <Button href={whatsappUrl} target="_blank" variant={isUpcoming ? 'secondary' : 'outline'} size="sm" class="group/btn">
+      <WhatsAppIcon size={14} class={`${isUpcoming ? 'text-white' : 'text-[#25D366]'} transition-transform group-hover/btn:scale-110`} />
+      <span>{isUpcoming ? 'Express Interest' : 'Enquire Details'}</span>
+    </Button>
+  </div>
+</div>

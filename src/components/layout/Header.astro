@@ -1,0 +1,117 @@
+---
+import Navigation from './Navigation.astro';
+import MobileMenu from './MobileMenu.astro';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import { getWhatsAppUrl } from '../../utils/whatsapp';
+import { getOfficialLogoUrl } from '../../utils/assets';
+
+export interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+const whatsappUrl = getWhatsAppUrl({ type: 'general' });
+const officialLogoUrl = getOfficialLogoUrl();
+---
+
+<header
+  id="main-site-header"
+  class="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-[#E2EAF3] transition-all duration-300"
+>
+  <Container size="default">
+    <div class="flex items-center justify-between h-18 sm:h-20">
+      <!-- Left: Logo & Wordmark Container -->
+      <a
+        href="/"
+        class="group flex items-center gap-3 select-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#3478D4]"
+        aria-label="Infotech Computers - Home"
+      >
+        {officialLogoUrl ? (
+          <div class="logo-slot flex items-center gap-2.5 sm:gap-3 shrink-0" data-logo-slot="true">
+            <img
+              src={officialLogoUrl}
+              alt="Infotech Computers Logo"
+              class="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform shrink-0"
+              width="44"
+              height="44"
+              loading="eager"
+            />
+            <div class="flex flex-col">
+              <span class="font-['Manrope_Variable',sans-serif] font-extrabold text-[15px] sm:text-[17px] leading-tight tracking-tight text-[#183B63]">
+                INFOTECH
+              </span>
+              <span class="text-[10px] sm:text-[11px] font-semibold tracking-[0.18em] uppercase text-[#64748B] -mt-0.5">
+                COMPUTERS
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div
+            class="logo-slot flex items-center justify-center w-10 h-10 rounded-lg bg-[#183B63] text-white font-bold font-['Manrope_Variable',sans-serif] shadow-xs group-hover:bg-[#122d4c] transition-colors shrink-0"
+            data-logo-slot="true"
+          >
+            <span class="text-base tracking-wider font-extrabold text-white">IT</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-['Manrope_Variable',sans-serif] font-extrabold text-[15px] sm:text-[17px] leading-tight tracking-tight text-[#183B63]">
+              INFOTECH
+            </span>
+            <span class="text-[10px] sm:text-[11px] font-semibold tracking-[0.18em] uppercase text-[#64748B] -mt-0.5">
+              COMPUTERS
+            </span>
+          </div>
+        )}
+      </a>
+
+      <!-- Center / Right: Desktop Navigation Links -->
+      <Navigation currentPath={currentPath} />
+
+      <!-- Right: Action CTA & Hamburger Menu -->
+      <div class="flex items-center gap-3">
+        <!-- Desktop Primary CTA -->
+        <div class="hidden sm:inline-flex">
+          <Button href={whatsappUrl} target="_blank" variant="secondary" size="md">
+            <span>Enquire Now</span>
+          </Button>
+        </div>
+
+        <!-- Mobile & Tablet Hamburger Trigger Button -->
+        <button
+          id="mobile-menu-trigger"
+          type="button"
+          class="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-[#253449] hover:bg-[#F3F7FC] hover:text-[#183B63] focus-visible:outline-[#3478D4]"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu-drawer"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="8" x2="20" y2="8"></line>
+            <line x1="4" y1="16" x2="20" y2="16"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </Container>
+</header>
+
+<!-- Mobile Drawer Component -->
+<MobileMenu currentPath={currentPath} />
+
+<script>
+  function handleHeaderScroll() {
+    const header = document.getElementById('main-site-header');
+    if (!header) return;
+
+    if (window.scrollY > 12) {
+      header.classList.add('shadow-sm', 'bg-white');
+      header.classList.remove('bg-white/95');
+    } else {
+      header.classList.remove('shadow-sm');
+      header.classList.add('bg-white/95');
+    }
+  }
+
+  window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+  handleHeaderScroll();
+</script>

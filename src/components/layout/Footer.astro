@@ -1,0 +1,198 @@
+---
+import Container from '../ui/Container.astro';
+import USolveTooltip from '../ui/USolveTooltip.astro';
+import { instituteData } from '../../data/institute';
+import { footerQuickLinks } from '../../data/navigation';
+import { getWhatsAppUrl } from '../../utils/whatsapp';
+import { getOfficialLogoUrl } from '../../utils/assets';
+
+const currentYear = new Date().getFullYear();
+const whatsappUrl = getWhatsAppUrl({ type: 'general' });
+const officialLogoUrl = getOfficialLogoUrl();
+---
+
+<footer class="bg-[#F3F7FC] border-t border-[#E2EAF3] text-[#253449] mt-auto">
+  <!-- Main Footer Content -->
+  <Container size="default" class="py-14 sm:py-16 lg:py-20">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
+      
+      <!-- Column 1: Institute Branding & Summary (4 cols) -->
+      <div class="lg:col-span-4 flex flex-col items-start">
+        <a href="/" class="group flex items-center gap-3 select-none mb-4" aria-label="Infotech Computers - Home">
+          {officialLogoUrl ? (
+            <img
+              src={officialLogoUrl}
+              alt="Infotech Computers Logo"
+              class="h-10 w-auto object-contain group-hover:scale-105 transition-transform shrink-0"
+              width="40"
+              height="40"
+              loading="lazy"
+            />
+          ) : (
+            <div class="w-9 h-9 rounded-lg bg-[#183B63] text-white flex items-center justify-center font-bold text-sm shrink-0">
+              IT
+            </div>
+          )}
+          <div class="flex flex-col">
+            <span class="font-['Manrope_Variable',sans-serif] font-extrabold text-base leading-tight tracking-tight text-[#183B63]">
+              INFOTECH
+            </span>
+            <span class="text-[10px] font-semibold tracking-[0.16em] uppercase text-[#64748B]">
+              COMPUTERS
+            </span>
+          </div>
+        </a>
+
+        <p class="text-sm text-[#64748B] leading-relaxed mb-5 max-w-sm">
+          Established in 2010 in Nidadavolu with {instituteData.experienceYears} of educational excellence. Providing computer training and delivering modern digital systems in technical collaboration with <USolveTooltip text="USolve" />.
+        </p>
+
+        <!-- Representative attribution badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-[#E2EAF3] text-xs text-[#253449]">
+          <span class="w-2 h-2 rounded-full bg-[#299D72]"></span>
+          <span>Institute Representative: <strong class="text-[#183B63] font-semibold">{instituteData.representative.name}</strong></span>
+        </div>
+
+        <!-- Social link -->
+        <div class="mt-5 flex items-center gap-3">
+          <a
+            href={instituteData.social.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white border border-[#E2EAF3] text-xs font-medium text-[#253449] hover:text-[#3478D4] hover:border-[#3478D4]/40 transition-colors"
+            aria-label="Follow Infotech Computers on Instagram"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+            </svg>
+            <span>Instagram</span>
+          </a>
+
+          <a
+            href={instituteData.location.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white border border-[#E2EAF3] text-xs font-medium text-[#253449] hover:text-[#3478D4] hover:border-[#3478D4]/40 transition-colors"
+            aria-label="View Infotech Computers on Google Maps"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Google Maps</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links (2 cols) -->
+      <div class="lg:col-span-2">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-[#183B63] font-['Manrope_Variable',sans-serif] mb-4">
+          Navigation
+        </h3>
+        <ul class="flex flex-col gap-2.5 text-sm text-[#64748B]">
+          {footerQuickLinks.map((item) => (
+            <li>
+              <a href={item.href} class="hover:text-[#3478D4] transition-colors">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Column 3: Featured Courses (3 cols) -->
+      <div class="lg:col-span-3">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-[#183B63] font-['Manrope_Variable',sans-serif] mb-4">
+          Training Courses
+        </h3>
+        <ul class="flex flex-col gap-2 text-sm text-[#64748B]">
+          {instituteData.courses.slice(0, 7).map((c) => (
+            <li>
+              <a href="/courses/" class="hover:text-[#3478D4] transition-colors flex items-center justify-between group">
+                <span>{c.name}</span>
+                {c.status === 'upcoming' && (
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-[#EAF3FF] text-[#3478D4] font-medium">Soon</span>
+                )}
+              </a>
+            </li>
+          ))}
+          <li class="pt-1">
+            <a href="/courses/" class="text-xs font-semibold text-[#3478D4] hover:underline inline-flex items-center gap-1">
+              View all 12 courses &rarr;
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact & Timings (3 cols) -->
+      <div class="lg:col-span-3 flex flex-col gap-3 text-sm text-[#64748B]">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-[#183B63] font-['Manrope_Variable',sans-serif] mb-2">
+          Contact & Timings
+        </h3>
+
+        <div class="flex items-start gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4] shrink-0 mt-0.5">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>{instituteData.location.formatted}</span>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4] shrink-0">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <a href={`tel:${instituteData.contact.phone}`} class="hover:text-[#3478D4] transition-colors">
+            {instituteData.contact.phoneFormatted}
+          </a>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#299D72] shrink-0">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="hover:text-[#3478D4] transition-colors">
+            WhatsApp: {instituteData.contact.whatsappFormatted}
+          </a>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4] shrink-0">
+            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+          <a href={`mailto:${instituteData.contact.email}`} class="hover:text-[#3478D4] transition-colors break-all">
+            {instituteData.contact.email}
+          </a>
+        </div>
+
+        <div class="flex items-center gap-2.5 pt-2 text-xs border-t border-[#E2EAF3]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#64748B] shrink-0">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>{instituteData.timings.operatingHours} (Sun Holiday)</span>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <!-- Bottom Bar: Collaboration Acknowledgment & Copyright -->
+  <div class="border-t border-[#E2EAF3] bg-white py-5">
+    <Container size="default">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#64748B]">
+        <p>
+          &copy; {instituteData.established}&ndash;{currentYear} {instituteData.name}. All rights reserved.
+        </p>
+
+        <!-- Digital services collaboration acknowledgement with USolve -->
+        <p class="inline-flex items-center gap-1.5 font-medium">
+          <span>Digital Services in technical collaboration with</span>
+          <span class="text-[#183B63] font-semibold tracking-wide">{instituteData.collaboration.partnerName}</span>
+        </p>
+      </div>
+    </Container>
+  </div>
+</footer>

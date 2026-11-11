@@ -1,0 +1,90 @@
+/* ==========================================================================
+   INFOTECH COMPUTERS DESIGN TOKENS
+   Phase 01 — Premium Design System Specification
+   ========================================================================== */
+
+:root {
+  /* Brand Palette */
+  --color-primary-navy: #183B63;
+  --color-primary-navy-dark: #102742;
+  --color-primary-navy-light: #235186;
+
+  --color-secondary-blue: #3478D4;
+  --color-secondary-blue-hover: #2761b0;
+  --color-secondary-blue-subtle: #4d8fe8;
+
+  --color-light-blue: #EAF3FF;
+  --color-light-blue-hover: #dbeafe;
+
+  --color-bg-main: #FFFFFF;
+  --color-bg-alt: #F3F7FC;
+  --color-bg-card: #FFFFFF;
+
+  --color-text-primary: #253449;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+
+  --color-border: #E2EAF3;
+  --color-border-subtle: #EDF3F9;
+  --color-border-hover: #C8D9EC;
+
+  --color-success: #299D72;
+  --color-success-bg: #EAF7F2;
+
+  /* Typography Stacks */
+  --font-family-sans: 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family-heading: 'Manrope Variable', 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Fluid Font Sizes */
+  --font-size-display: clamp(2.5rem, 5vw + 1rem, 4rem);     /* 40px - 64px */
+  --font-size-h1: clamp(2.125rem, 3.5vw + 0.8rem, 3.25rem);  /* 34px - 52px */
+  --font-size-h2: clamp(1.65rem, 2.2vw + 0.6rem, 2.25rem);   /* 26.4px - 36px */
+  --font-size-h3: clamp(1.25rem, 1.2vw + 0.6rem, 1.625rem);  /* 20px - 26px */
+  --font-size-h4: clamp(1.1rem, 0.8vw + 0.6rem, 1.25rem);    /* 17.6px - 20px */
+  --font-size-body-lg: clamp(1.0625rem, 0.4vw + 0.95rem, 1.1875rem); /* 17px - 19px */
+  --font-size-body: 1rem;                                     /* 16px */
+  --font-size-body-sm: 0.875rem;                              /* 14px */
+  --font-size-caption: 0.75rem;                               /* 12px */
+
+  /* Line Heights */
+  --line-height-tight: 1.15;
+  --line-height-snug: 1.28;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.7;
+
+  /* Spacing Scale */
+  --space-unit: 0.25rem;
+  --space-section-y: clamp(3.5rem, 6vw, 6rem);
+  --container-max: 1280px;
+  --container-pad-x: clamp(1rem, 3.5vw, 2rem);
+
+  /* Elevation & Shadows (Clean & subtle, never muddy) */
+  --shadow-xs: 0 1px 2px 0 rgba(24, 59, 99, 0.04);
+  --shadow-sm: 0 2px 4px 0 rgba(24, 59, 99, 0.05);
+  --shadow-md: 0 6px 16px -2px rgba(24, 59, 99, 0.06), 0 2px 6px -1px rgba(24, 59, 99, 0.03);
+  --shadow-lg: 0 14px 28px -4px rgba(24, 59, 99, 0.08), 0 4px 10px -2px rgba(24, 59, 99, 0.03);
+  --shadow-header: 0 2px 12px 0 rgba(24, 59, 99, 0.06);
+
+  /* Border Radii (Professional, refined geometry) */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Z-Index Hierarchy */
+  --z-base: 1;
+  --z-card: 10;
+  --z-floating: 40;
+  --z-header: 50;
+  --z-modal-backdrop: 90;
+  --z-modal: 100;
+  --z-tooltip: 110;
+}

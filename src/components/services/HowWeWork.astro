@@ -1,0 +1,77 @@
+---
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+const steps = [
+  {
+    step: '01',
+    title: 'Understand',
+    description: "Understand the client's goals, requirements and challenges.",
+    detail: 'Detailed discovery discussions to analyze operational bottlenecks, target audiences, and project specifications.',
+  },
+  {
+    step: '02',
+    title: 'Plan',
+    description: 'Identify an appropriate approach, features and implementation plan.',
+    detail: 'Architectural outlining, user flow mapping, tech stack selection, and milestone definition.',
+  },
+  {
+    step: '03',
+    title: 'Develop',
+    description: 'Design and develop the required digital solution.',
+    detail: 'Full-cycle engineering featuring clean code, modular architecture, responsive design, and rigorous testing.',
+  },
+  {
+    step: '04',
+    title: 'Deliver',
+    description: 'Test, refine and hand over the completed solution.',
+    detail: 'System deployment, quality assurance validation, documentation handover, and launch support.',
+  },
+];
+---
+
+<section class="py-16 md:py-24 bg-[#F3F7FC] border-b border-[#E2EAF3]">
+  <Container size="default">
+    
+    <SectionHeading
+      eyebrow="Delivery Methodology"
+      title="From Your Idea to a Digital Product"
+      description="A structured, collaborative approach to engineering dependable web, mobile, and enterprise software systems."
+    />
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+      {steps.map((s) => (
+        <div class="card-base p-6 sm:p-7 flex flex-col justify-between bg-white border border-[#E2EAF3] hover-elevate relative overflow-hidden">
+          
+          <!-- Large faded step number background -->
+          <span class="absolute top-3 right-4 font-extrabold text-5xl text-[#EAF3FF] font-mono select-none pointer-events-none" aria-hidden="true">
+            {s.step}
+          </span>
+
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-[#EAF3FF] text-[#183B63] flex items-center justify-center font-mono font-bold text-sm mb-5 relative z-10">
+              {s.step}
+            </div>
+
+            <h3 class="text-xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-2 relative z-10">
+              {s.title}
+            </h3>
+
+            <p class="text-sm font-semibold text-[#253449] mb-2 leading-relaxed relative z-10">
+              {s.description}
+            </p>
+
+            <p class="text-xs text-[#64748B] leading-relaxed relative z-10">
+              {s.detail}
+            </p>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-[#E2EAF3] text-[11px] font-mono text-[#3478D4] font-medium">
+            Stage {s.step} Workflow
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </Container>
+</section>

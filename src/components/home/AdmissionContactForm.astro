@@ -1,0 +1,557 @@
+---
+import WhatsAppIcon from '../ui/WhatsAppIcon.astro';
+
+interface CourseOption {
+  value: string;
+  label: string;
+  badge?: string;
+  category: string;
+}
+
+interface CourseCategory {
+  category: string;
+  options: CourseOption[];
+}
+
+const courseGroups: CourseCategory[] = [
+  {
+    category: 'Office & Accounting',
+    options: [
+      { value: 'MS Office (Word, Excel, PowerPoint, Access)', label: 'MS Office (Word, Excel, PPT)', badge: 'Core', category: 'Office' },
+      { value: 'TallyPrime with GST', label: 'TallyPrime with GST', badge: 'Accounting', category: 'Accounting' }
+    ]
+  },
+  {
+    category: 'Graphic Design & Publishing',
+    options: [
+      { value: 'Photoshop (Digital Graphics)', label: 'Adobe Photoshop', badge: 'Creative', category: 'Design' },
+      { value: 'PageMaker (DTP & Publishing)', label: 'Adobe PageMaker', badge: 'DTP', category: 'Design' },
+      { value: 'CorelDRAW (Vector Design)', label: 'CorelDRAW Vector', badge: 'Vector', category: 'Design' }
+    ]
+  },
+  {
+    category: 'Programming & Database',
+    options: [
+      { value: 'C Programming', label: 'C Programming', badge: 'Foundations', category: 'Coding' },
+      { value: 'C++ Programming', label: 'C++ Programming', badge: 'OOP', category: 'Coding' },
+      { value: 'Java (Core Java & OOP)', label: 'Java (Core & OOP)', badge: 'Enterprise', category: 'Coding' },
+      { value: 'Oracle (SQL Database)', label: 'Oracle SQL Database', badge: 'Database', category: 'Data' },
+      { value: 'Python Programming', label: 'Python Programming', badge: 'Popular', category: 'Coding' }
+    ]
+  },
+  {
+    category: 'Upcoming Emerging Technologies',
+    options: [
+      { value: 'AI Fundamentals (Upcoming)', label: 'AI Fundamentals', badge: 'Upcoming', category: 'AI' },
+      { value: 'Web Technologies (Upcoming)', label: 'Web Technologies', badge: 'Upcoming', category: 'Web' }
+    ]
+  },
+  {
+    category: 'General Enquiry',
+    options: [
+      { value: 'General Computer Education Enquiry', label: 'Other / General Computer Skills', badge: 'General', category: 'General' }
+    ]
+  }
+];
+
+const timingOptions = [
+  { value: 'Morning (8:30 AM – 12:00 PM)', label: 'Morning (8:30 AM – 12:00 PM)', badge: 'Popular' },
+  { value: 'Afternoon (12:00 PM – 4:00 PM)', label: 'Afternoon (12:00 PM – 4:00 PM)', badge: 'Regular' },
+  { value: 'Evening (4:00 PM – 8:00 PM)', label: 'Evening (4:00 PM – 8:00 PM)', badge: 'Student/Work' },
+  { value: 'Flexible / Any Time', label: 'Flexible / Any Time', badge: 'Flexible' }
+];
+---
+
+<div class="card-base p-6 sm:p-8 bg-white border border-[#E2EAF3] shadow-md rounded-2xl relative overflow-visible">
+  <!-- Subtle ambient top accent bar -->
+  <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#183B63] via-[#3478D4] to-[#25D366] rounded-t-2xl"></div>
+
+  <div class="flex items-center justify-between mb-5">
+    <div>
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#EAF7F2] text-[#1EBE5D] border border-[#25D366]/30 mb-2">
+        <span class="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"></span>
+        Fast WhatsApp Response
+      </span>
+      <h3 class="text-xl sm:text-2xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif]">
+        Course Admission Enquiry
+      </h3>
+    </div>
+  </div>
+
+  <p class="text-sm text-[#64748B] mb-6 leading-relaxed">
+    Fill in your details below. Clicking <strong>Submit Enquiry</strong> will open WhatsApp with your pre-filled inquiry to connect directly with Srinivas Sir.
+  </p>
+
+  <form id="whatsapp-admission-form" class="flex flex-col gap-4">
+    <!-- Student Name -->
+    <div>
+      <label for="student-name" class="block text-xs font-bold uppercase tracking-wider text-[#183B63] mb-1.5">
+        Your Full Name <span class="text-rose-500">*</span>
+      </label>
+      <input
+        type="text"
+        id="student-name"
+        name="studentName"
+        required
+        placeholder="e.g. Rahul Sharma"
+        class="w-full px-4 py-3 rounded-xl border border-[#E2EAF3] bg-[#F8FAFC] text-[#253449] placeholder:text-[#94A3B8] text-sm focus:outline-none focus:ring-2 focus:ring-[#3478D4] focus:border-transparent transition-all duration-200"
+      />
+    </div>
+
+    <!-- Phone Number & Preferred Timing Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label for="student-phone" class="block text-xs font-bold uppercase tracking-wider text-[#183B63] mb-1.5">
+          Mobile Number <span class="text-rose-500">*</span>
+        </label>
+        <input
+          type="tel"
+          id="student-phone"
+          name="studentPhone"
+          required
+          pattern="[0-9]{10}"
+          placeholder="10-digit number"
+          class="w-full px-4 py-3 rounded-xl border border-[#E2EAF3] bg-[#F8FAFC] text-[#253449] placeholder:text-[#94A3B8] text-sm focus:outline-none focus:ring-2 focus:ring-[#3478D4] focus:border-transparent transition-all duration-200"
+        />
+      </div>
+
+      <!-- Custom Styled Timing Dropdown -->
+      <div class="relative custom-dropdown-container" id="timing-dropdown-wrapper">
+        <label for="timing-custom-trigger" class="block text-xs font-bold uppercase tracking-wider text-[#183B63] mb-1.5">
+          Preferred Timing
+        </label>
+        
+        <!-- Hidden input for form submission -->
+        <input
+          type="hidden"
+          id="student-timing"
+          name="studentTiming"
+          value="Morning (8:30 AM – 12:00 PM)"
+        />
+
+        <!-- Trigger Button -->
+        <button
+          type="button"
+          id="timing-custom-trigger"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          class="w-full px-4 py-3 rounded-xl border border-[#E2EAF3] bg-[#F8FAFC] text-[#253449] text-sm flex items-center justify-between gap-2 text-left focus:outline-none focus:ring-2 focus:ring-[#3478D4] focus:border-transparent hover:border-[#3478D4]/50 hover:bg-white transition-all duration-200 cursor-pointer shadow-2xs"
+        >
+          <div class="flex items-center gap-2.5 min-w-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4] shrink-0">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span id="timing-trigger-label" class="font-medium text-[#183B63] truncate">
+              Morning (8:30 AM – 12:00 PM)
+            </span>
+          </div>
+          <svg id="timing-trigger-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#64748B] shrink-0 transition-transform duration-200">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div
+          id="timing-dropdown-menu"
+          role="listbox"
+          class="absolute left-0 right-0 top-[calc(100%+6px)] z-50 bg-white/98 backdrop-blur-md border border-[#3478D4]/25 shadow-2xl rounded-2xl p-1.5 opacity-0 pointer-events-none -translate-y-2 scale-98 transition-all duration-200 ease-out"
+        >
+          {timingOptions.map((opt) => (
+            <div
+              role="option"
+              tabindex="0"
+              data-value={opt.value}
+              data-label={opt.label}
+              class="custom-select-option group flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm text-[#253449] hover:text-[#183B63] hover:bg-[#EAF3FF] cursor-pointer transition-all duration-150 relative overflow-hidden select-none"
+            >
+              <div class="flex items-center gap-2.5 min-w-0">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#3478D4]/40 group-hover:bg-[#3478D4] transition-colors shrink-0"></span>
+                <span class="font-medium truncate option-label">{opt.label}</span>
+              </div>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-[#F1F5F9] text-[#64748B] group-hover:bg-white group-hover:text-[#3478D4] transition-colors border border-transparent group-hover:border-[#3478D4]/20">
+                {opt.badge}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Styled Course Selection Dropdown with Theme Aesthetics & Magnetic Cursor Effect -->
+    <div class="relative custom-dropdown-container" id="course-dropdown-wrapper">
+      <label for="course-custom-trigger" class="block text-xs font-bold uppercase tracking-wider text-[#183B63] mb-1.5">
+        Course of Interest <span class="text-rose-500">*</span>
+      </label>
+
+      <!-- Hidden input synced with custom selection for native validation and form handling -->
+      <input
+        type="hidden"
+        id="course-select"
+        name="courseSelected"
+        required
+        value=""
+      />
+
+      <!-- Custom Dropdown Trigger Button -->
+      <button
+        type="button"
+        id="course-custom-trigger"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        class="w-full px-4 py-3 rounded-xl border border-[#E2EAF3] bg-[#F8FAFC] text-[#253449] text-sm flex items-center justify-between gap-2 text-left focus:outline-none focus:ring-2 focus:ring-[#3478D4] focus:border-transparent hover:border-[#3478D4]/50 hover:bg-white transition-all duration-200 cursor-pointer shadow-2xs"
+      >
+        <div class="flex items-center gap-2.5 min-w-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4] shrink-0">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+          <span id="course-trigger-label" class="text-sm text-[#94A3B8] font-normal truncate">
+            Select a course...
+          </span>
+        </div>
+        <svg id="course-trigger-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#64748B] shrink-0 transition-transform duration-200">
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+      </button>
+
+      <!-- Dropdown Menu Panel with Category Groups and Magnetic Cursor Hover Option Items -->
+      <div
+        id="course-dropdown-menu"
+        role="listbox"
+        class="absolute left-0 right-0 top-[calc(100%+6px)] z-50 bg-white/98 backdrop-blur-md border border-[#3478D4]/25 shadow-2xl rounded-2xl p-2 max-h-72 overflow-y-auto opacity-0 pointer-events-none -translate-y-2 scale-98 transition-all duration-200 ease-out custom-select-scrollbar"
+      >
+        {courseGroups.map((group) => (
+          <div class="mb-2 last:mb-0">
+            <!-- Category Group Header -->
+            <div class="px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#3478D4] bg-[#F1F5F9]/90 rounded-lg mb-1 flex items-center justify-between select-none">
+              <span class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#3478D4]"></span>
+                {group.category}
+              </span>
+              <span class="text-[9px] text-[#64748B] font-mono lowercase">
+                {group.options.length} {group.options.length === 1 ? 'course' : 'courses'}
+              </span>
+            </div>
+
+            <!-- Group Options -->
+            <div class="flex flex-col gap-0.5">
+              {group.options.map((opt) => (
+                <div
+                  role="option"
+                  tabindex="0"
+                  data-value={opt.value}
+                  data-label={opt.label}
+                  class="custom-select-option group flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm text-[#253449] hover:text-[#183B63] hover:bg-[#EAF3FF] cursor-pointer transition-all duration-150 relative overflow-hidden select-none"
+                >
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#CBD5E1] group-hover:bg-[#3478D4] transition-colors shrink-0"></span>
+                    <span class="font-medium truncate option-label">{opt.label}</span>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    {opt.badge && (
+                      <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-[#F1F5F9] text-[#64748B] group-hover:bg-white group-hover:text-[#3478D4] transition-colors border border-transparent group-hover:border-[#3478D4]/20">
+                        {opt.badge}
+                      </span>
+                    )}
+                    <svg class="check-icon hidden text-[#3478D4] shrink-0" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Optional Note / Question -->
+    <div>
+      <label for="student-message" class="block text-xs font-bold uppercase tracking-wider text-[#183B63] mb-1.5">
+        Message or Questions (Optional)
+      </label>
+      <textarea
+        id="student-message"
+        name="studentMessage"
+        rows="2"
+        placeholder="e.g. When does the next batch begin?"
+        class="w-full px-4 py-3 rounded-xl border border-[#E2EAF3] bg-[#F8FAFC] text-[#253449] placeholder:text-[#94A3B8] text-sm focus:outline-none focus:ring-2 focus:ring-[#3478D4] focus:border-transparent transition-all duration-200 resize-none"
+      ></textarea>
+    </div>
+
+    <!-- Error message feedback -->
+    <div id="form-error-msg" class="hidden p-3 rounded-lg bg-rose-50 text-rose-700 text-xs border border-rose-200">
+      Please provide your full name, valid 10-digit mobile number, and select a course.
+    </div>
+
+    <!-- Submit CTA Button -->
+    <button
+      type="submit"
+      id="submit-whatsapp-btn"
+      class="group mt-2 w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-sm tracking-wide shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer focus-visible:outline-3 focus-visible:outline-[#25D366]"
+    >
+      <WhatsAppIcon size={20} class="text-white transition-transform duration-300 group-hover:scale-110" />
+      <span>Submit Enquiry via WhatsApp</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1">
+        <path d="M5 12h14"></path>
+        <path d="m12 5 7 7-7 7"></path>
+      </svg>
+    </button>
+
+    <p class="text-[11px] text-center text-[#64748B] mt-1 flex items-center justify-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#25D366]">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+      </svg>
+      <span>Direct WhatsApp chat to N. Srinivas Sir (+91 99898 48608)</span>
+    </p>
+  </form>
+</div>
+
+<style>
+  /* Sleek custom scrollbar for dropdown menu */
+  .custom-select-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-select-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-select-scrollbar::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 9999px;
+  }
+  .custom-select-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #3478D4;
+  }
+
+  /* Magnetic hover cursor interaction styles */
+  .custom-select-option {
+    will-change: transform;
+    transform-style: preserve-3d;
+  }
+</style>
+
+<script>
+  function setupAdmissionForm() {
+    const form = document.getElementById('whatsapp-admission-form') as HTMLFormElement | null;
+    const errorMsg = document.getElementById('form-error-msg');
+    if (!form) return;
+
+    // --- CUSTOM DROPDOWN CONTROLLER ---
+    function initCustomDropdown(config: {
+      wrapperId: string;
+      triggerId: string;
+      labelId: string;
+      chevronId: string;
+      menuId: string;
+      hiddenInputId: string;
+      placeholder: string;
+      onSelect?: (value: string, label: string) => void;
+    }) {
+      const wrapper = document.getElementById(config.wrapperId);
+      const trigger = document.getElementById(config.triggerId) as HTMLButtonElement | null;
+      const label = document.getElementById(config.labelId);
+      const chevron = document.getElementById(config.chevronId);
+      const menu = document.getElementById(config.menuId);
+      const hiddenInput = document.getElementById(config.hiddenInputId) as HTMLInputElement | null;
+
+      if (!wrapper || !trigger || !label || !chevron || !menu || !hiddenInput) return;
+
+      const elTrigger = trigger;
+      const elLabel = label;
+      const elChevron = chevron;
+      const elMenu = menu;
+      const elInput = hiddenInput;
+
+      let isOpen = false;
+
+      function openMenu() {
+        isOpen = true;
+        elTrigger.setAttribute('aria-expanded', 'true');
+        elTrigger.classList.add('border-[#3478D4]', 'ring-2', 'ring-[#3478D4]/20', 'bg-white');
+        elChevron.classList.add('rotate-180', 'text-[#3478D4]');
+        elMenu.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-2', 'scale-98');
+        elMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0', 'scale-100');
+      }
+
+      function closeMenu() {
+        isOpen = false;
+        elTrigger.setAttribute('aria-expanded', 'false');
+        elTrigger.classList.remove('border-[#3478D4]', 'ring-2', 'ring-[#3478D4]/20', 'bg-white');
+        elChevron.classList.remove('rotate-180', 'text-[#3478D4]');
+        elMenu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2', 'scale-98');
+        elMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0', 'scale-100');
+      }
+
+      elTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        // Close other open dropdowns first
+        document.querySelectorAll('.custom-dropdown-container').forEach((other) => {
+          if (other !== wrapper) {
+            const otherMenu = other.querySelector('[role="listbox"]');
+            const otherTrigger = other.querySelector('button');
+            const otherChevron = other.querySelector('svg:last-child');
+            if (otherMenu && otherTrigger && otherChevron) {
+              otherTrigger.setAttribute('aria-expanded', 'false');
+              otherTrigger.classList.remove('border-[#3478D4]', 'ring-2', 'ring-[#3478D4]/20', 'bg-white');
+              otherChevron.classList.remove('rotate-180', 'text-[#3478D4]');
+              otherMenu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2', 'scale-98');
+              otherMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0', 'scale-100');
+            }
+          }
+        });
+
+        if (isOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      // Handle Option Selection & Magnetic Hover Interaction
+      const options = elMenu.querySelectorAll<HTMLElement>('.custom-select-option');
+      options.forEach((opt) => {
+        // --- Magnetic Cursor Hover Effect ---
+        opt.addEventListener('mousemove', (e) => {
+          const rect = opt.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          // Smooth micro-displacement towards mouse
+          const pullX = ((x - centerX) / centerX) * 4;
+          const pullY = ((y - centerY) / centerY) * 2;
+          opt.style.transform = `translate3d(${pullX}px, ${pullY}px, 0)`;
+          opt.style.background = `radial-gradient(140px circle at ${x}px ${y}px, rgba(52, 120, 212, 0.16), #EAF3FF)`;
+        });
+
+        opt.addEventListener('mouseleave', () => {
+          opt.style.transform = 'translate3d(0, 0, 0)';
+          opt.style.background = '';
+        });
+
+        // Click selection
+        opt.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const val = opt.getAttribute('data-value') || '';
+          const displayLabel = opt.getAttribute('data-label') || val;
+
+          elInput.value = val;
+          elLabel.textContent = displayLabel;
+          elLabel.classList.remove('text-[#94A3B8]', 'font-normal');
+          elLabel.classList.add('text-[#183B63]', 'font-semibold');
+
+          // Highlight selected option
+          options.forEach((o) => {
+            o.classList.remove('bg-[#EAF3FF]', 'text-[#183B63]', 'font-bold');
+            const check = o.querySelector('.check-icon');
+            if (check) check.classList.add('hidden');
+          });
+          opt.classList.add('bg-[#EAF3FF]', 'text-[#183B63]', 'font-bold');
+          const myCheck = opt.querySelector('.check-icon');
+          if (myCheck) myCheck.classList.remove('hidden');
+
+          // Remove any trigger error highlights
+          elTrigger.classList.remove('border-rose-400', 'ring-2', 'ring-rose-200');
+
+          closeMenu();
+          if (config.onSelect) config.onSelect(val, displayLabel);
+        });
+
+        // Keyboard navigation for options
+        opt.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            opt.click();
+          }
+        });
+      });
+
+      // Close on Outside Click
+      document.addEventListener('click', (e) => {
+        if (!wrapper.contains(e.target as Node)) {
+          if (isOpen) closeMenu();
+        }
+      });
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) {
+          closeMenu();
+          elTrigger.focus();
+        }
+      });
+    }
+
+    // Initialize Timing Dropdown
+    initCustomDropdown({
+      wrapperId: 'timing-dropdown-wrapper',
+      triggerId: 'timing-custom-trigger',
+      labelId: 'timing-trigger-label',
+      chevronId: 'timing-trigger-chevron',
+      menuId: 'timing-dropdown-menu',
+      hiddenInputId: 'student-timing',
+      placeholder: 'Select preferred timing...'
+    });
+
+    // Initialize Course Dropdown
+    initCustomDropdown({
+      wrapperId: 'course-dropdown-wrapper',
+      triggerId: 'course-custom-trigger',
+      labelId: 'course-trigger-label',
+      chevronId: 'course-trigger-chevron',
+      menuId: 'course-dropdown-menu',
+      hiddenInputId: 'course-select',
+      placeholder: 'Select a course...'
+    });
+
+    // --- FORM SUBMIT HANDLER ---
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const nameInput = document.getElementById('student-name') as HTMLInputElement | null;
+      const phoneInput = document.getElementById('student-phone') as HTMLInputElement | null;
+      const courseSelect = document.getElementById('course-select') as HTMLInputElement | null;
+      const timingSelect = document.getElementById('student-timing') as HTMLInputElement | null;
+      const messageInput = document.getElementById('student-message') as HTMLTextAreaElement | null;
+      const courseTrigger = document.getElementById('course-custom-trigger');
+
+      const name = nameInput?.value.trim() || '';
+      const phone = phoneInput?.value.trim() || '';
+      const course = courseSelect?.value || '';
+      const timing = timingSelect?.value || 'Morning (8:30 AM – 12:00 PM)';
+      const message = messageInput?.value.trim() || '';
+
+      if (!name || !phone || phone.length < 10 || !course) {
+        if (errorMsg) errorMsg.classList.remove('hidden');
+        if (!course && courseTrigger) {
+          courseTrigger.classList.add('border-rose-400', 'ring-2', 'ring-rose-200');
+          courseTrigger.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+
+      if (errorMsg) errorMsg.classList.add('hidden');
+      if (courseTrigger) courseTrigger.classList.remove('border-rose-400', 'ring-2', 'ring-rose-200');
+
+      // Compose polite pre-filled WhatsApp message
+      const text = `Hello Infotech Computers!
+My name is ${name}.
+I am interested in joining the ${course} course in Nidadavolu.
+
+• Mobile: ${phone}
+• Preferred Timing: ${timing}${message ? `\n• Question: ${message}` : ''}
+
+Please share details about course syllabus, schedule, and admissions. Thank you!`;
+
+      const whatsappTarget = `https://wa.me/919989848608?text=${encodeURIComponent(text)}`;
+      
+      // Open in new tab/app window
+      window.open(whatsappTarget, '_blank', 'noopener,noreferrer');
+    });
+  }
+
+  setupAdmissionForm();
+  document.addEventListener('astro:page-load', setupAdmissionForm);
+</script>

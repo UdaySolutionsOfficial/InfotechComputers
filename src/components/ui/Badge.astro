@@ -1,0 +1,43 @@
+---
+export interface Props {
+  variant?: 'blue' | 'success' | 'navy' | 'neutral' | 'outline';
+  size?: 'sm' | 'md';
+  hasDot?: boolean;
+  class?: string;
+}
+
+const {
+  variant = 'blue',
+  size = 'md',
+  hasDot = false,
+  class: className = '',
+} = Astro.props;
+
+const sizeStyles = {
+  sm: 'px-2 py-0.5 text-[11px]',
+  md: 'px-2.5 py-1 text-xs',
+};
+
+const variantStyles = {
+  blue: 'bg-[#EAF3FF] text-[#183B63] border border-[#3478D4]/20',
+  navy: 'bg-[#183B63] text-white',
+  success: 'bg-[#EAF7F2] text-[#299D72] border border-[#299D72]/20',
+  neutral: 'bg-[#F3F7FC] text-[#253449] border border-[#E2EAF3]',
+  outline: 'bg-transparent text-[#183B63] border border-[#E2EAF3]',
+};
+
+const dotColors = {
+  blue: 'bg-[#3478D4]',
+  navy: 'bg-white',
+  success: 'bg-[#299D72]',
+  neutral: 'bg-[#64748B]',
+  outline: 'bg-[#183B63]',
+};
+---
+
+<span class={`inline-flex items-center gap-1.5 font-medium rounded-full tracking-wide select-none ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}>
+  {hasDot && (
+    <span class={`w-1.5 h-1.5 rounded-full shrink-0 ${dotColors[variant]}`} aria-hidden="true" />
+  )}
+  <slot />
+</span>

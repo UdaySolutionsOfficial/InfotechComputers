@@ -1,0 +1,41 @@
+---
+export interface Props {
+  variant?: 'light-blue' | 'navy' | 'blue' | 'success' | 'subtle';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  shape?: 'squircle' | 'circle';
+  class?: string;
+}
+
+const {
+  variant = 'light-blue',
+  size = 'md',
+  shape = 'squircle',
+  class: className = '',
+} = Astro.props;
+
+const sizeStyles = {
+  sm: 'w-8 h-8 text-sm',
+  md: 'w-10 h-10 text-base',
+  lg: 'w-12 h-12 text-lg',
+  xl: 'w-16 h-16 text-2xl',
+};
+
+const shapeStyles = {
+  squircle: 'rounded-[10px]',
+  circle: 'rounded-full',
+};
+
+const variantStyles = {
+  'light-blue': 'bg-[#EAF3FF] text-[#183B63] border border-[#3478D4]/15',
+  navy: 'bg-[#183B63] text-white',
+  blue: 'bg-[#3478D4] text-white',
+  success: 'bg-[#EAF7F2] text-[#299D72] border border-[#299D72]/20',
+  subtle: 'bg-[#F3F7FC] text-[#253449] border border-[#E2EAF3]',
+};
+
+const combinedClasses = `inline-flex items-center justify-center shrink-0 transition-colors duration-200 ${sizeStyles[size]} ${shapeStyles[shape]} ${variantStyles[variant]} ${className}`;
+---
+
+<div class={combinedClasses}>
+  <slot />
+</div>

@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServicesHero from '../../components/services/ServicesHero.astro';
+import ServiceCatalogue from '../../components/services/ServiceCatalogue.astro';
+import HowWeWork from '../../components/services/HowWeWork.astro';
+import CollaborationBranding from '../../components/services/CollaborationBranding.astro';
+import ContactCTA from '../../components/shared/ContactCTA.astro';
+import { instituteData } from '../../data/institute';
+import { getUSolveProjectMailto } from '../../utils/whatsapp';
+
+const projectMailto = getUSolveProjectMailto('Digital Solutions Project Consultation');
+---
+
+<BaseLayout
+  title="Website & Software Development Services | Infotech × USolve"
+  description="Explore website development, customized software, ecommerce, billing systems, tracking solutions, AI applications and digital services in collaboration with USolve."
+  canonicalPath="/services/"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Digital Services', path: '/services/' },
+  ]}
+  preloadHeroImage="/images/generated/digital-innovation-3d.jpg"
+>
+  <!-- Section 1: Services Hero -->
+  <ServicesHero />
+
+  <!-- Section 2: Comprehensive Service Catalogue (All 9 Services) -->
+  <ServiceCatalogue />
+
+  <!-- Section 3: Delivery Process / How We Work (4 Stages) -->
+  <HowWeWork />
+
+  <!-- Section 4: Collaboration Model & Brand Separation (Infotech Computers × USolve) -->
+  <CollaborationBranding />
+
+  <!-- Section 5: Services Project Consultation CTA (Strictly USolve Project Contacts) -->
+  <ContactCTA
+    title="Ready to Build Your Next Digital Product?"
+    description="Connect with our technical team at USolve to discuss your project requirements, system architecture, timelines, and implementation strategy."
+    badgeText="Digital Project Consultation"
+    primaryButtonText="Discuss on Email"
+    primaryButtonHref={projectMailto}
+    secondaryButtonText="Visit USolve Website"
+    secondaryButtonHref={instituteData.collaboration.websiteUrl}
+    isProjectEnquiry={true}
+  />
+</BaseLayout>

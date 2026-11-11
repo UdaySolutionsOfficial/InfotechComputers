@@ -1,0 +1,203 @@
+---
+import { mainNavItems } from '../../data/navigation';
+
+export interface Props {
+  currentPath?: string;
+  class?: string;
+}
+
+const { currentPath = Astro.url.pathname, class: className = '' } = Astro.props;
+
+function getNavTarget(href: string): string {
+  if (href === '/') return 'home';
+  if (href.startsWith('/#')) return href.replace('/#', '');
+  if (href.includes('courses')) return 'courses';
+  if (href.includes('services')) return 'services';
+  return href.replace(/^\/|\/$/g, '');
+}
+
+function isActive(href: string): boolean {
+  if (href === '/') {
+    return currentPath === '/' || currentPath === '';
+  }
+  if (href.startsWith('/#')) {
+    return false;
+  }
+  return currentPath.startsWith(href);
+}
+---
+
+<nav id="desktop-main-nav" aria-label="Main Navigation" class={`hidden lg:flex items-center gap-1 xl:gap-2 ${className}`}>
+  {mainNavItems.map((item) => {
+    const active = isActive(item.href);
+    const target = getNavTarget(item.href);
+    return (
+      <a
+        href={item.href}
+        data-nav-target={target}
+        class={`main-nav-link whitespace-nowrap relative px-3 py-2 xl:px-3.5 text-sm font-medium rounded-md transition-all duration-200 select-none ${
+          active
+            ? 'nav-link-active text-[#3478D4] font-semibold bg-[#EAF3FF]/70'
+            : 'text-[#253449] hover:text-[#183B63] hover:bg-[#F3F7FC]'
+        }`}
+        aria-current={active ? 'page' : undefined}
+      >
+        <span>{item.label}</span>
+        <span
+          class={`nav-active-pill absolute bottom-0 left-3 right-3 h-[2px] bg-[#3478D4] rounded-full transition-opacity duration-200 ${
+            active ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+          aria-hidden="true"
+        />
+      </a>
+    );
+  })}
+</nav>
+
+<script>
+  function setupScrollSpy() {
+    const isHomePage = window.location.pathname === '/' || window.location.pathname === '' || window.location.pathname.endsWith('/index.html');
+    if (!isHomePage) return;
+
+    const desktopNav = document.getElementById('desktop-main-nav');
+    const desktopLinks = desktopNav ? desktopNav.querySelectorAll<HTMLAnchorElement>('[data-nav-target]') : [];
+    const mobileLinks = document.querySelectorAll<HTMLAnchorElement>('#mobile-menu-drawer [data-nav-target]');
+
+    if (desktopLinks.length === 0 && mobileLinks.length === 0) return;
+
+    const sectionIds = ['home', 'about', 'courses', 'services', 'contact'];
+    const sections: { id: string; el: HTMLElement }[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el });
+    });
+
+    if (sections.length === 0) return;
+
+    let currentActiveId = 'home';
+
+    function setActive(targetId: string) {
+      if (currentActiveId === targetId && document.querySelector('.nav-link-active')) return;
+      currentActiveId = targetId;
+
+      desktopLinks.forEach((link) => {
+        const isTarget = link.getAttribute('data-nav-target') === targetId;
+        const pill = link.querySelector('.nav-active-pill');
+
+        if (isTarget) {
+          link.classList.add('nav-link-active', 'text-[#3478D4]', 'font-semibold', 'bg-[#EAF3FF]/70');
+          link.classList.remove('text-[#253449]', 'hover:text-[#183B63]', 'hover:bg-[#F3F7FC]');
+          link.setAttribute('aria-current', 'page');
+          if (pill) {
+            pill.classList.remove('opacity-0', 'pointer-events-none');
+            pill.classList.add('opacity-100');
+          }
+        } else {
+          link.classList.remove('nav-link-active', 'text-[#3478D4]', 'font-semibold', 'bg-[#EAF3FF]/70');
+          link.classList.add('text-[#253449]', 'hover:text-[#183B63]', 'hover:bg-[#F3F7FC]');
+          link.removeAttribute('aria-current');
+          if (pill) {
+            pill.classList.remove('opacity-100');
+            pill.classList.add('opacity-0', 'pointer-events-none');
+          }
+        }
+      });
+
+      mobileLinks.forEach((link) => {
+        const isTarget = link.getAttribute('data-nav-target') === targetId;
+        if (isTarget) {
+          link.classList.add('text-[#3478D4]', 'bg-[#EAF3FF]', 'font-semibold');
+          link.classList.remove('text-[#253449]', 'hover:bg-[#F3F7FC]', 'hover:text-[#183B63]');
+          link.setAttribute('aria-current', 'page');
+        } else {
+          link.classList.remove('text-[#3478D4]', 'bg-[#EAF3FF]', 'font-semibold');
+          link.classList.add('text-[#253449]', 'hover:bg-[#F3F7FC]', 'hover:text-[#183B63]');
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        ticking = false;
+        const scrollY = window.scrollY;
+
+        // Near top
+        if (scrollY < 120) {
+          setActive('home');
+          return;
+        }
+
+        // Near bottom of document
+        if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 80) {
+          setActive('contact');
+          return;
+        }
+
+        // Scan sections with header offset
+        const headerOffset = 130;
+        let matchedId = 'home';
+
+        for (const { id, el } of sections) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= headerOffset && rect.bottom > headerOffset) {
+            matchedId = id;
+            break;
+          }
+        }
+
+        setActive(matchedId);
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Handle hash on initial load
+    if (window.location.hash) {
+      const hashId = window.location.hash.replace('#', '');
+      if (sectionIds.includes(hashId)) {
+        setActive(hashId);
+      }
+    } else {
+      onScroll();
+    }
+
+    // Attach smooth click handlers for in-page anchors
+    function handleAnchorClick(e: MouseEvent, target: string, href: string) {
+      if (href.startsWith('/#')) {
+        const id = href.replace('/#', '');
+        const targetEl = document.getElementById(id);
+        if (targetEl) {
+          e.preventDefault();
+          history.pushState(null, '', `/#${id}`);
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+          setActive(target);
+        }
+      } else if (href === '/') {
+        e.preventDefault();
+        history.pushState(null, '', '/');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActive('home');
+      }
+    }
+
+    desktopLinks.forEach((link) => {
+      const href = link.getAttribute('href') || '';
+      const target = link.getAttribute('data-nav-target') || '';
+      link.addEventListener('click', (e) => handleAnchorClick(e, target, href));
+    });
+
+    mobileLinks.forEach((link) => {
+      const href = link.getAttribute('href') || '';
+      const target = link.getAttribute('data-nav-target') || '';
+      link.addEventListener('click', (e) => handleAnchorClick(e, target, href));
+    });
+  }
+
+  setupScrollSpy();
+  document.addEventListener('astro:page-load', setupScrollSpy);
+</script>

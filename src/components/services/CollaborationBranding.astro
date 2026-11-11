@@ -1,0 +1,146 @@
+---
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import USolveTooltip from '../ui/USolveTooltip.astro';
+import { instituteData } from '../../data/institute';
+import { getUSolveProjectMailto } from '../../utils/whatsapp';
+import { getUSolveLogoUrl, getInfotechMicroLogoUrl, getUSolveMicroLogoUrl } from '../../utils/assets';
+
+const projectMailto = getUSolveProjectMailto('New Project Discussion');
+const usolveLogoUrl = getUSolveLogoUrl();
+const infotechMicroLogoUrl = getInfotechMicroLogoUrl();
+const usolveMicroLogoUrl = getUSolveMicroLogoUrl();
+---
+
+<section class="py-16 md:py-24 bg-white border-b border-[#E2EAF3]" id="usolve-collaboration">
+  <Container size="default">
+    
+    <div class="rounded-2xl bg-[#F8FAFC] border border-[#E2EAF3] p-8 sm:p-12 lg:p-14 shadow-sm relative overflow-hidden">
+      <!-- Subtle background ambient gradient -->
+      <div class="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-[#EAF3FF] blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
+        
+        <div class="lg:col-span-8">
+          <!-- Dual brand identity pill with Transparent Micro-Logos & Positive Partnership Icon -->
+          <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-[#E2EAF3] shadow-xs mb-5">
+            <div class="flex items-center gap-1.5">
+              <img
+                src={infotechMicroLogoUrl}
+                alt="Infotech Computers Logo"
+                class="w-4 h-4 object-contain shrink-0"
+                width="16"
+                height="16"
+                loading="lazy"
+              />
+              <span class="text-xs font-bold text-[#183B63]">Infotech Computers</span>
+            </div>
+            
+            <!-- Positive Collaboration Bridge Icon -->
+            <span class="w-4 h-4 rounded-full bg-[#EAF3FF] text-[#3478D4] flex items-center justify-center shrink-0" title="Technical Partnership">
+              <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </span>
+
+            <div class="flex items-center gap-1.5">
+              <img
+                src={usolveMicroLogoUrl}
+                alt="USolve Logo"
+                class="w-4 h-4 object-contain shrink-0"
+                width="16"
+                height="16"
+                loading="lazy"
+              />
+              <USolveTooltip text="USolve" />
+            </div>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#183B63] font-['Manrope_Variable',sans-serif] tracking-tight leading-snug">
+            Combining Educational Technology Experience with Modern Software Engineering.
+          </h2>
+
+          <p class="mt-4 text-base sm:text-lg text-[#64748B] leading-relaxed">
+            Digital Services in technical collaboration with <USolveTooltip text="USolve" />. We unite Infotech Computers' 16+ years of local technical presence in Nidadavolu with USolve's engineering capabilities in building custom web applications, billing tools, and digital solutions.
+          </p>
+
+          <!-- Structural Distinction Box -->
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl bg-white border border-[#E2EAF3] shadow-xs">
+              <span class="text-xs font-bold uppercase tracking-wider text-[#183B63] block mb-1">
+                Infotech Computers
+              </span>
+              <span class="text-xs text-[#3478D4] font-medium block mb-2">
+                Computer Education &amp; Training
+              </span>
+              <p class="text-xs text-[#64748B] leading-relaxed">
+                Leading local computer training, student mentoring, and practical lab learning in Nidadavolu.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-white border border-[#E2EAF3] shadow-xs">
+              <span class="text-xs font-bold uppercase tracking-wider text-[#3478D4] block mb-1">
+                USolve
+              </span>
+              <span class="text-xs text-[#183B63] font-medium block mb-2">
+                Digital Product Development
+              </span>
+              <p class="text-xs text-[#64748B] leading-relaxed">
+                Full-stack software engineering, bespoke architecture, cloud systems, and business platforms.
+              </p>
+            </div>
+          </div>
+
+          <!-- Project CTA Bar -->
+          <div class="mt-10 pt-8 border-t border-[#E2EAF3] flex flex-wrap items-center gap-4">
+            <Button href={projectMailto} variant="primary" size="lg">
+              <span>Discuss Your Project</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+            </Button>
+
+            <Button href={instituteData.collaboration.websiteUrl} target="_blank" variant="outline" size="lg">
+              <span>Visit USolve Website</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </Button>
+          </div>
+
+          <p class="mt-4 text-xs text-[#64748B]">
+            Direct business correspondence: <a href={`mailto:${instituteData.collaboration.email}`} class="text-[#3478D4] hover:underline font-mono">{instituteData.collaboration.email}</a>
+          </p>
+        </div>
+
+        <!-- Right: 3D USolve Partner Visual Showcase Card -->
+        <div class="lg:col-span-4">
+          <div class="card-base p-4 bg-white border border-[#E2EAF3] rounded-2xl shadow-lg hover-elevate group">
+            <div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0F1D] shadow-inner mb-3">
+              <img
+                src={usolveLogoUrl}
+                alt="USolve 3D Metallic Emblem Logo"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                width="400"
+                height="250"
+                loading="lazy"
+              />
+              <span class="absolute bottom-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#3478D4] text-white">
+                Technology Partner
+              </span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-[#183B63]">USolve Engineering</span>
+              <a href="https://usolve.in" target="_blank" rel="noopener noreferrer" class="text-[#3478D4] hover:underline font-mono font-medium">
+                usolve.in &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </Container>
+</section>

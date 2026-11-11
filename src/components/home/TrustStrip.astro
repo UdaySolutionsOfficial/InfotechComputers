@@ -1,0 +1,116 @@
+---
+import Container from '../ui/Container.astro';
+import { instituteData } from '../../data/institute';
+---
+
+<section class="py-6 sm:py-8 bg-[#F3F7FC] border-b border-[#E2EAF3] relative">
+  <Container size="default">
+    <div id="stats-counter-strip" class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 items-center">
+      
+      <!-- Stat 1: Established (Counts to 2010) -->
+      <div class="flex flex-col items-center sm:items-start p-4 sm:p-5 rounded-2xl bg-white border border-[#E2EAF3] shadow-xs hover:border-[#3478D4]/50 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
+        <span class="text-xs uppercase tracking-wider text-[#64748B] font-bold group-hover:text-[#3478D4] transition-colors">
+          Founding Year
+        </span>
+        <span class="text-2xl sm:text-3xl font-extrabold text-[#183B63] font-['Manrope_Variable',sans-serif] mt-1 flex items-baseline">
+          <span class="stat-number" data-target="2010">2010</span>
+        </span>
+        <span class="text-xs text-[#3478D4] font-medium mt-0.5">Established Center</span>
+      </div>
+
+      <!-- Stat 2: Experience (Counts to 16) -->
+      <div class="flex flex-col items-center sm:items-start p-4 sm:p-5 rounded-2xl bg-white border border-[#E2EAF3] shadow-xs hover:border-[#3478D4]/50 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
+        <span class="text-xs uppercase tracking-wider text-[#64748B] font-bold group-hover:text-[#3478D4] transition-colors">
+          Proven Experience
+        </span>
+        <span class="text-2xl sm:text-3xl font-extrabold text-[#183B63] font-['Manrope_Variable',sans-serif] mt-1 flex items-baseline">
+          <span class="stat-number" data-target="16">16</span>
+          <span class="text-[#3478D4] ml-0.5">+</span>
+          <span class="text-sm font-bold text-[#183B63] ml-1.5 hidden sm:inline">Years</span>
+        </span>
+        <span class="text-xs text-[#3478D4] font-medium mt-0.5">Practical Training</span>
+      </div>
+
+      <!-- Stat 3: Location -->
+      <div class="flex flex-col items-center sm:items-start p-4 sm:p-5 rounded-2xl bg-white border border-[#E2EAF3] shadow-xs hover:border-[#3478D4]/50 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
+        <span class="text-xs uppercase tracking-wider text-[#64748B] font-bold group-hover:text-[#3478D4] transition-colors">
+          Institute Location
+        </span>
+        <span class="text-xl sm:text-2xl font-extrabold text-[#183B63] font-['Manrope_Variable',sans-serif] mt-1 truncate max-w-full group-hover:text-[#3478D4] transition-colors">
+          {instituteData.location.city}
+        </span>
+        <span class="text-xs text-[#3478D4] font-medium mt-0.5">Andhra Pradesh, India</span>
+      </div>
+
+      <!-- Stat 4: Established Course Offerings (Counts to 10) -->
+      <div class="flex flex-col items-center sm:items-start p-4 sm:p-5 rounded-2xl bg-white border border-[#E2EAF3] shadow-xs hover:border-[#3478D4]/50 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group">
+        <span class="text-xs uppercase tracking-wider text-[#64748B] font-bold group-hover:text-[#3478D4] transition-colors">
+          Core Curriculum
+        </span>
+        <span class="text-2xl sm:text-3xl font-extrabold text-[#183B63] font-['Manrope_Variable',sans-serif] mt-1 flex items-baseline">
+          <span class="stat-number" data-target="10">10</span>
+          <span class="text-[#3478D4] ml-0.5">+</span>
+        </span>
+        <span class="text-xs text-[#3478D4] font-medium mt-0.5">Active Tech Courses</span>
+      </div>
+
+    </div>
+  </Container>
+</section>
+
+<script>
+  function initCounters() {
+    const strip = document.getElementById('stats-counter-strip');
+    if (!strip) return;
+
+    let hasAnimated = false;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            hasAnimated = true;
+            animateNumbers();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(strip);
+
+    function animateNumbers() {
+      const elements = document.querySelectorAll<HTMLElement>('.stat-number');
+      const duration = 1600; // 1.6s smooth duration
+
+      elements.forEach((el) => {
+        const target = parseInt(el.getAttribute('data-target') || '0', 10);
+        if (!target) return;
+
+        const startTime = performance.now();
+
+        function update(currentTime: number) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease-out cubic: 1 - Math.pow(1 - progress, 3)
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          const currentVal = Math.floor(easeOut * target);
+
+          el.textContent = currentVal.toString();
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          } else {
+            el.textContent = target.toString();
+          }
+        }
+
+        requestAnimationFrame(update);
+      });
+    }
+  }
+
+  initCounters();
+  document.addEventListener('astro:page-load', initCounters);
+</script>

@@ -1,0 +1,178 @@
+---
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Button from '../ui/Button.astro';
+import Badge from '../ui/Badge.astro';
+import WhatsAppIcon from '../ui/WhatsAppIcon.astro';
+import CourseLogosMarquee from './CourseLogosMarquee.astro';
+import { instituteData } from '../../data/institute';
+import { getWhatsAppUrl } from '../../utils/whatsapp';
+
+const courses = instituteData.courses;
+const officeCourses = courses.filter((c) => c.category === 'office-accounting');
+const designCourses = courses.filter((c) => c.category === 'design-publishing');
+const programmingCourses = courses.filter((c) => c.category === 'programming-db' && c.status === 'active');
+---
+
+<section id="courses" class="pt-6 pb-16 md:pt-10 md:pb-24 bg-[#F3F7FC] border-b border-[#E2EAF3] scroll-mt-20 overflow-hidden w-full max-w-full">
+  <!-- Super Animated Infinite Looping Course Logos Marquee (Full-Width, Unaltered Authentic Brand Logos) -->
+  <CourseLogosMarquee />
+
+  <Container size="default" class="mt-10 md:mt-14">
+    
+    <SectionHeading
+      eyebrow="Curriculum Overview"
+      title="Explore Your Learning Journey"
+      description="Build essential computer skills and explore programming, creativity and technology."
+    />
+
+    <!-- Three Category Cards Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+      
+      <!-- Category 1: Office & Business Applications -->
+      <div class="card-base p-7 flex flex-col justify-between bg-white border border-[#E2EAF3] hover-elevate">
+        <div>
+          <div class="flex items-center justify-between mb-5">
+            <div class="w-12 h-12 rounded-xl bg-[#EAF3FF] text-[#183B63] flex items-center justify-center font-bold text-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4]">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="9" y1="21" x2="9" y2="9"></line>
+              </svg>
+            </div>
+            <Badge variant="blue" size="sm">2 Core Programs</Badge>
+          </div>
+
+          <h3 class="text-xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-2">
+            Office &amp; Business Applications
+          </h3>
+          <p class="text-sm text-[#64748B] leading-relaxed mb-6">
+            Essential productivity tools and computerized financial ledger management for daily office workflows and business reporting.
+          </p>
+
+          <ul class="flex flex-col gap-3 pt-4 border-t border-[#E2EAF3] mb-6">
+            {officeCourses.map((c) => (
+              <li class="flex items-center justify-between p-2.5 rounded-lg bg-[#F8FAFC] border border-[#E2EAF3] text-sm">
+                <span class="font-semibold text-[#183B63]">{c.name}</span>
+                <a
+                  href={getWhatsAppUrl({ type: 'course', courseName: c.name })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs text-[#25D366] hover:text-[#1EBE5D] font-semibold inline-flex items-center gap-1 group/wa"
+                >
+                  <WhatsAppIcon size={12} class="transition-transform group-hover/wa:scale-110" />
+                  <span>Enquire</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <Button href="/courses/" variant="outline" size="sm" fullWidth>
+          <span>View Office Syllabus &rarr;</span>
+        </Button>
+      </div>
+
+      <!-- Category 2: Graphic Design & Publishing -->
+      <div class="card-base p-7 flex flex-col justify-between bg-white border border-[#E2EAF3] hover-elevate">
+        <div>
+          <div class="flex items-center justify-between mb-5">
+            <div class="w-12 h-12 rounded-xl bg-[#EAF7F2] text-[#299D72] flex items-center justify-center font-bold text-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                <path d="M2 2l7.586 7.586"></path>
+                <circle cx="11" cy="11" r="2"></circle>
+              </svg>
+            </div>
+            <Badge variant="success" size="sm">3 Core Programs</Badge>
+          </div>
+
+          <h3 class="text-xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-2">
+            Graphic Design &amp; Publishing
+          </h3>
+          <p class="text-sm text-[#64748B] leading-relaxed mb-6">
+            Comprehensive creative software training covering image editing, photo manipulation, page layouts, and vector print graphics.
+          </p>
+
+          <ul class="flex flex-col gap-3 pt-4 border-t border-[#E2EAF3] mb-6">
+            {designCourses.map((c) => (
+              <li class="flex items-center justify-between p-2.5 rounded-lg bg-[#F8FAFC] border border-[#E2EAF3] text-sm">
+                <span class="font-semibold text-[#183B63]">{c.name}</span>
+                <a
+                  href={getWhatsAppUrl({ type: 'course', courseName: c.name })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs text-[#25D366] hover:text-[#1EBE5D] font-semibold inline-flex items-center gap-1 group/wa"
+                >
+                  <WhatsAppIcon size={12} class="transition-transform group-hover/wa:scale-110" />
+                  <span>Enquire</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <Button href="/courses/" variant="outline" size="sm" fullWidth>
+          <span>View Design Syllabus &rarr;</span>
+        </Button>
+      </div>
+
+      <!-- Category 3: Programming & Database -->
+      <div class="card-base p-7 flex flex-col justify-between bg-white border border-[#E2EAF3] hover-elevate">
+        <div>
+          <div class="flex items-center justify-between mb-5">
+            <div class="w-12 h-12 rounded-xl bg-[#EAF3FF] text-[#183B63] flex items-center justify-center font-bold text-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3478D4]">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+            <Badge variant="blue" size="sm">5 Core Programs</Badge>
+          </div>
+
+          <h3 class="text-xl font-bold text-[#183B63] font-['Manrope_Variable',sans-serif] mb-2">
+            Programming &amp; Database
+          </h3>
+          <p class="text-sm text-[#64748B] leading-relaxed mb-6">
+            Structured software foundations from introductory procedural programming in C to modern Python and relational database concepts.
+          </p>
+
+          <ul class="flex flex-col gap-2 pt-4 border-t border-[#E2EAF3] mb-6">
+            {programmingCourses.map((c) => (
+              <li class="flex items-center justify-between p-2 rounded-lg bg-[#F8FAFC] border border-[#E2EAF3] text-sm">
+                <span class="font-semibold text-[#183B63]">{c.name}</span>
+                <a
+                  href={getWhatsAppUrl({ type: 'course', courseName: c.name })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs text-[#25D366] hover:text-[#1EBE5D] font-semibold inline-flex items-center gap-1 group/wa"
+                >
+                  <WhatsAppIcon size={12} class="transition-transform group-hover/wa:scale-110" />
+                  <span>Enquire</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <Button href="/courses/" variant="outline" size="sm" fullWidth>
+          <span>View Programming Syllabus &rarr;</span>
+        </Button>
+      </div>
+
+    </div>
+
+    <!-- Central Explore All Courses Action -->
+    <div class="mt-12 text-center">
+      <Button href="/courses/" variant="primary" size="lg">
+        <span>Explore All Courses</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </Button>
+    </div>
+
+  </Container>
+</section>

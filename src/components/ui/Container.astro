@@ -1,0 +1,33 @@
+---
+import type { HTMLTag } from 'astro/types';
+
+export interface Props {
+  as?: HTMLTag;
+  size?: 'default' | 'narrow' | 'wide' | 'full';
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  as = 'div',
+  size = 'default',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const Tag = as as any;
+
+const sizeStyles = {
+  narrow: 'max-w-4xl',     // 896px — great for reading & forms
+  default: 'max-w-7xl',    // 1280px — main content container
+  wide: 'max-w-[1440px]',  // 1440px — wide showcase
+  full: 'max-w-full',      // 100%
+};
+
+const baseContainer = 'w-full mx-auto px-4 sm:px-6 lg:px-8';
+const combinedClasses = [baseContainer, sizeStyles[size], className].filter(Boolean).join(' ');
+---
+
+<Tag class={combinedClasses} {...rest}>
+  <slot />
+</Tag>

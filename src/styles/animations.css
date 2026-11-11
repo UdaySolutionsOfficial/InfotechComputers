@@ -1,0 +1,304 @@
+/* ==========================================================================
+   INFOTECH COMPUTERS ANIMATION UTILITIES
+   Performance-first: transform & opacity only, reduced-motion compliant
+   ========================================================================== */
+
+/* Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulseSubtle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.92;
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes floatGentleAlt {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+/* Animation Utility Classes */
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-down {
+  animation: fadeDown 0.4s ease-out forwards;
+}
+
+.animate-float {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatGentleAlt 6s ease-in-out 1.5s infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulseRing 3s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+}
+
+/* Scroll Reveal States (Cascading IntersectionObserver animations) */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-init.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Delays */
+.delay-100 { transition-delay: 100ms; }
+.delay-150 { transition-delay: 150ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-250 { transition-delay: 250ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+
+/* Interactive Hover Utilities */
+.hover-elevate {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+.hover-elevate:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -10px rgba(24, 59, 99, 0.12), 0 4px 12px -2px rgba(52, 120, 212, 0.08);
+  border-color: rgba(52, 120, 212, 0.35);
+}
+
+.hover-scale-subtle {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-scale-subtle:hover {
+  transform: scale(1.02);
+}
+
+.hover-img-zoom {
+  overflow: hidden;
+}
+.hover-img-zoom img {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-img-zoom:hover img {
+  transform: scale(1.04);
+}
+
+/* Button Shimmer / Sheen Effect */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  transition: all 0.75s ease-in-out;
+  pointer-events: none;
+}
+.btn-shimmer:hover::after {
+  left: 140%;
+}
+
+/* Button Tap Feedback */
+.btn-press:active {
+  transform: scale(0.98);
+}
+
+/* Glowing Pulsing Utilities */
+.glow-whatsapp {
+  box-shadow: 0 8px 24px -4px rgba(37, 211, 102, 0.45);
+}
+.glow-whatsapp:hover {
+  box-shadow: 0 12px 30px -2px rgba(37, 211, 102, 0.6);
+}
+
+/* ==========================================================================
+   SUPER ANIMATED INFINITE MARQUEE
+   Smooth continuous hardware-accelerated horizontal ticker loop
+   ========================================================================== */
+@keyframes marqueeLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeLeft 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-track:hover,
+.marquee-container:hover .animate-marquee-track {
+  animation-play-state: paused;
+}
+
+/* Gradient Fade Mask for Seamless Edge In/Out */
+.marquee-fade-mask {
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 4%,
+    rgba(0, 0, 0, 1) 96%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 4%,
+    rgba(0, 0, 0, 1) 96%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* ==========================================================================
+   INTERACTIVE ICON HOVER ANIMATION (Elastic Playful Pop & Smooth Reset)
+   Smooth micro-interaction on hover; springs cleanly back on hover out
+   ========================================================================== */
+@keyframes iconInteractivePop {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  30% {
+    transform: scale(1.22) rotate(-8deg);
+  }
+  65% {
+    transform: scale(1.15) rotate(5deg);
+  }
+  100% {
+    transform: scale(1.16) rotate(0deg);
+  }
+}
+
+.course-logo-animated {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.course-card:hover .course-logo-animated,
+.group\/card:hover .course-logo-animated,
+.group:hover .course-logo-animated {
+  animation: iconInteractivePop 0.52s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-init {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .animate-marquee-track {
+    animation: none !important;
+    transform: none !important;
+    overflow-x: auto;
+  }
+}

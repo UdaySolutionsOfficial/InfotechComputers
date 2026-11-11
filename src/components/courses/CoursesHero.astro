@@ -1,0 +1,68 @@
+---
+import Container from '../ui/Container.astro';
+import Badge from '../ui/Badge.astro';
+---
+
+<section class="relative overflow-hidden py-12 sm:py-16 md:py-20 bg-gradient-to-b from-[#F3F7FC] to-white border-b border-[#E2EAF3]">
+  <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#EAF3FF] blur-3xl pointer-events-none opacity-70" aria-hidden="true"></div>
+
+  <Container size="default">
+    
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center gap-2 text-xs text-[#64748B]">
+        <li>
+          <a href="/" class="hover:text-[#3478D4] transition-colors">Home</a>
+        </li>
+        <li aria-hidden="true" class="text-[#94A3B8]">&bull;</li>
+        <li class="font-semibold text-[#183B63]" aria-current="page">Courses</li>
+      </ol>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      
+      <!-- Left: Title & Description -->
+      <div class="lg:col-span-8">
+        <Badge variant="blue" size="md" hasDot class="mb-3.5">
+          Curriculum &bull; Nidadavolu Center
+        </Badge>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#183B63] tracking-tight font-['Manrope_Variable',sans-serif] leading-[1.18]">
+          Discover the Right Skills for Your Future
+        </h1>
+
+        <p class="mt-4 text-base sm:text-lg text-[#64748B] max-w-2xl leading-relaxed">
+          Explore computer education and technology courses at Infotech Computers, Nidadavolu. We provide hands-on training tailored for office work, creative design, software programming, and emerging technology.
+        </p>
+
+        <!-- Quick Facts Pill -->
+        <div class="mt-6 flex flex-wrap items-center gap-4 text-xs font-medium text-[#253449]">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-[#E2EAF3] shadow-xs">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#3478D4]"></span>
+            10 Active Courses + 2 Upcoming
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-[#E2EAF3] shadow-xs">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#299D72]"></span>
+            Practical Computer Training
+          </span>
+        </div>
+      </div>
+
+      <!-- Right: Programming Visual -->
+      <div class="lg:col-span-4 hidden lg:block">
+        <div class="card-base p-2.5 bg-white border border-[#E2EAF3] shadow-md rounded-2xl overflow-hidden">
+          <img
+            src="/images/generated/programming-learning-3d.jpg"
+            alt="3D Programming & Computer Education Visual"
+            width="600"
+            height="450"
+            class="w-full h-auto rounded-xl object-cover"
+            loading="eager"
+          />
+        </div>
+      </div>
+
+    </div>
+
+  </Container>
+</section>
